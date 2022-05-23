@@ -6,6 +6,13 @@ const Navbar = () => {
         <div className='container border-2'>
             Navbar
         </div>
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
     </header>
  )
 }
