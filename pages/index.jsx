@@ -8,7 +8,7 @@ const Home = () => {
         <title>Foodyy</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="h-auto max-w-[100vw]">
+      <main className="h-auto max-w-[100vw] flex flex-col justify-center">
         <Navbar />
       </main>
     </div>
