@@ -11,9 +11,9 @@ module.exports = {
         'text-light': '#515151',
         'text-dark': 'white',
         'red-custome': '#e80013',
-        'orange-custome':'#515151',
+        'orange-custome': '#515151',
       },
     },
   },
-  plugins: [], //require("tailwind-scrollbar")
+  plugins: [require('tailwind-scrollbar')], //require("tailwind-scrollbar")
 }

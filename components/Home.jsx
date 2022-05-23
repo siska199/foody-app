@@ -59,7 +59,7 @@ const Home = () => {
       </div>
 
       {/* Right */}
-      <div className="bg-cardOverlay relative flex h-[45rem] justify-end border-2">
+      <div className="bg-cardOverlay relative flex h-[35rem] justify-end border-2">
         <div className="absolute top-0 left-0  flex h-full w-full flex-wrap items-center gap-4 ">
           <div className="flex w-[80%] flex-wrap gap-4 ">
             {heroData.map((data, i) => (

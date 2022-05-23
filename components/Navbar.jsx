@@ -9,7 +9,7 @@ const Navbar = () => {
     { name: 'Service', url: '' },
   ]
   return (
-    <header className="border-2 bg-light-theme ">
+    <header className="border-2 bg-light-theme sticky w-full top-0 z-40">
       <nav className="container flex border-2 p-2  ">
         <div className="flex items-center gap-2">
           <img className="w-8 object-cover" src="/assets/logo.png" />
