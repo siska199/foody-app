@@ -1,18 +1,19 @@
 import Head from 'next/head'
 import Navbar from '../components/Navbar'
-
-const Home = () => {
+import Home from '../components/Home'
+const Index = () => {
   return (
     <div>
       <Head>
         <title>Foodyy</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="h-auto max-w-[100vw] flex flex-col justify-center">
+      <main className="flex h-auto max-w-[100vw] flex-col justify-center bg-light-theme">
         <Navbar />
+        <Home />
       </main>
     </div>
   )
 }
 
-export default Home
+export default Index
