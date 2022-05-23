@@ -1,9 +1,11 @@
 import '../styles/globals.css'
-import { SessionProvider, signIn } from 'next-auth/react'
-import { useSession } from 'next-auth/react'
+import { SessionProvider, useSession, signIn } from 'next-auth/react'
 import { useEffect } from 'react'
-
-const App = ({ Component, pageProps: { session, ...pageProps } }) => {
+import { Loading } from '../components/Loading'
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
     <SessionProvider session={session}>
       {Component.auth ? (
@@ -17,17 +19,20 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
   )
 }
 
-const Auth = ({ children }) => {
+function Auth({ children }) {
   const { data: session, status } = useSession()
   const isUser = !!session?.user
   useEffect(() => {
     if (status === 'loading') return
     if (!isUser) signIn()
   }, [isUser, status])
+
   if (isUser) {
     return children
   }
-  return <div className="bg-dark m-auto h-full w-full ">Loading...</div>
+  return (
+    <div className="flex h-[100vh] w-[100vw] items-center justify-center bg-black text-[2rem] font-thin text-white">
+      <Loading />
+    </div>
+  )
 }
-
-export default App
