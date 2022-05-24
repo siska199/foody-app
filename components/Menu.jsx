@@ -1,5 +1,4 @@
 import React from 'react'
-import LabelTitle from './LabelTitle'
 import CardFood from './CardFood'
 import CardCategory from './CardCategory'
 import { IoFastFood } from 'react-icons/io5'
@@ -23,12 +22,13 @@ const Menu = () => {
     desc: '80 Calories',
     price: '12',
   }))
+
   return (
-    <section id="menu" className="container ">
+    <section id="menu" className="container pt-[4rem] md:pt-[7rem]">
       {/* Fruit category */}
       <div className="flex w-full flex-col  ">
-        <LabelTitle title={'Our Fresh & Healthy Fruits'} />
-        <div className="my-[7rem] flex w-full justify-between gap-3">
+        <MenuTitle title={'Our Fresh & Healthy Fruits'} />
+        <div className="md:my-[7rem] my-[3rem] flex flex-wrap md:flex-nowrap w-full justify-center md:justify-between gap-3">
           {dataFruites.map((data, i) => (
             <CardFood key={i} data={data} />
           ))}
@@ -36,16 +36,16 @@ const Menu = () => {
       </div>
       {/* Hot dishes category */}
       <div>
-        <LabelTitle title={'Our Hot Dishes'} />
+        <MenuTitle title={'Our Hot Dishes'} />
         {/* Category filtering */}
-        <div className="my-10 flex w-full justify-center gap-4 ">
+        <div className="md:my-10 my-8 flex flex-wrap w-full justify-center gap-2 md:gap-4 ">
           {dataIcon.map((data, i) => (
             <CardCategory data={data} key={i} />
           ))}
         </div>
-        <div className="m-[7rem] flex flex-wrap justify-center gap-3">
+        <div className="md:mx-[7rem] mt-[3rem] md:mt-[7rem] flex flex-wrap justify-center gap-3">
           {dataHotDishes.map((data, i) => (
-            <div className='mb-[3rem]'>
+            <div className='md:mb-[3rem]'>
               <CardFood key={i} data={data} />
             </div>
           ))}
@@ -54,4 +54,18 @@ const Menu = () => {
     </section>
   )
 }
+
+const MenuTitle = ({ title}) => {
+  return (
+    <p
+      className={`before:content relative text-2xl font-semibold capitalize
+    text-text-light before:absolute before:rounded-lg before:w-[10%] from-orange-400
+    to-orange-600 before:-bottom-2 before:left-0 before:h-1 before:bg-gradient-to-tr
+    `}
+    >
+      {title}
+    </p>
+  )
+}
+
 export default Menu

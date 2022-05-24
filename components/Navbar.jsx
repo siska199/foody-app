@@ -12,17 +12,19 @@ const Navbar = () => {
   return (
     <header className="fixed left-0 top-0 z-40 w-full bg-light-theme ">
       <nav className="container flex px-8 py-2  ">
-        <motion.div
-          whileTap={{ scale: 1.25 }}
-          className="flex cursor-pointer items-center gap-2"
-        >
-          <img className="w-8 object-cover" src="/assets/logo.png" />
-          <h1 className="text-[1.2rem] font-bold">Foody</h1>
-        </motion.div>
+        <Link href="/">
+          <motion.div
+            whileTap={{ scale: 1.25 }}
+            className="flex cursor-pointer items-center gap-2"
+          >
+            <img className="w-8 object-cover" src="/assets/logo.png" />
+            <h1 className="text-[1.2rem] font-bold">Foody</h1>
+          </motion.div>
+        </Link>
 
         <div className="ml-auto flex items-center gap-6 text-text-light">
           {/* Menu */}
-          <ul className="m-auto flex gap-[6rem] text-[1.1rem]  ">
+          <ul className="m-auto hidden md:flex md:gap-[2rem] lg:gap-[6rem] md:text-[1rem] lg:text-[1.1rem]  ">
             {menuName.map((menu, i) => (
               <li
                 key={i}

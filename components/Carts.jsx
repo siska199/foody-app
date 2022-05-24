@@ -1,6 +1,8 @@
 import React from 'react'
 import CardCart from './CardCart'
 import { motion } from 'framer-motion'
+import { HiArrowLeft } from 'react-icons/hi'
+import { MdDeleteForever } from 'react-icons/md'
 const Carts = () => {
   const dataCart = [...Array(10)].map((_, i) => ({
     imageUrl: '/assets/f1.png',
@@ -10,9 +12,10 @@ const Carts = () => {
 
   return (
     <div className="fixed top-0 right-0 z-50 h-full w-[27rem] bg-white shadow-lg">
-      <header className="py-5 px-3">
-        <HiArrowLeft />
-        <h1></h1>
+      <header className="flex items-center justify-between py-3 px-3 text-[1.3rem]">
+        <HiArrowLeft className="cursor-pointer" />
+        <h1>Cart</h1>
+        <MdDeleteForever className="cursor-pointer text-[1.5rem] text-red-600" />
       </header>
       <main className="flex h-full flex-col justify-between rounded-[3rem] bg-[#292A2D] p-8 text-white">
         <div className="flex h-[45%] flex-col gap-3 overflow-y-scroll scrollbar-thin">
