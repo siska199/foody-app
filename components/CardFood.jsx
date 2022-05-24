@@ -3,7 +3,7 @@ import { MdShoppingBasket } from 'react-icons/md'
 import { motion } from 'framer-motion'
 const CardFood = ({ data }) => {
   return (
-    <div className="flex w-[20rem] flex-col items-center justify-between gap-2 bg-white p-3 backdrop-blur-sm hover:bg-white hover:shadow-md">
+    <div className="flex w-[15rem] flex-col items-center justify-between gap-2 bg-white p-3 backdrop-blur-sm hover:bg-white hover:shadow-md">
       <div className="flex w-full justify-end relative ">
         <motion.img
           src={data.imageUrl}

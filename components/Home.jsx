@@ -30,10 +30,10 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="container my-[5rem] grid grid-cols-2 bg-light-theme "
+      className="container py-[7rem] grid grid-cols-2 bg-light-theme "
     >
       {/* Left */}
-      <div className="flex w-[80%] flex-col gap-5 text-[#2e2e2e] ">
+      <div className="flex w-[90%] flex-col gap-5 text-[#2e2e2e] ">
         <div className="flex w-[10rem] items-center justify-center gap-2 rounded-full bg-orange-100">
           <h5 className="text-base font-semibold text-orange-500">
             Bike Delivery

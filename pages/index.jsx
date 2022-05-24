@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Navbar from '../components/Navbar'
 import Home from '../components/Home'
 import Menu from '../components/Menu'
+import Carts from '../components/Carts'
 
 const Index = () => {
   return (
@@ -10,10 +11,12 @@ const Index = () => {
         <title>Foodyy</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex overflow-y-hidden flex-col justify-center bg-light-theme px-7 bg-dark ">
+      <main className="bg-dark flex flex-col justify-center overflow-y-hidden bg-light-theme px-7 ">
         <Navbar />
         <Home />
         <Menu />
+        {}
+        <Carts />
       </main>
     </div>
   )
