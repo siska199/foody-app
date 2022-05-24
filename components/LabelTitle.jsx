@@ -1,6 +1,6 @@
 import React from 'react'
 
-const LabelTitle = ({ title, lengthLine }) => {
+const LabelTitle = ({ title}) => {
   return (
     <p
       className={`before:content relative text-2xl font-semibold capitalize

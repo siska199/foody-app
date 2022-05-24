@@ -9,6 +9,7 @@ html,body{
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
     max-width:100vw;
+    min-height: 100vh;
 }
 
 
@@ -18,6 +19,6 @@ html,body{
 
 @layer components {
     .container{
-        @apply max-w-[1200px] mx-auto
+        @apply max-w-[1500px] mx-auto 
     }
   }

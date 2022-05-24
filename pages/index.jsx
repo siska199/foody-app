@@ -10,7 +10,7 @@ const Index = () => {
         <title>Foodyy</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex h-auto max-w-[100vw] flex-col justify-center bg-light-theme ">
+      <main className="flex overflow-y-hidden flex-col justify-center bg-light-theme px-7 bg-dark ">
         <Navbar />
         <Home />
         <Menu />

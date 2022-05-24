@@ -9,8 +9,8 @@ const Navbar = () => {
     { name: 'Service', url: '' },
   ]
   return (
-    <header className="border-2 bg-light-theme sticky w-full top-0 z-40">
-      <nav className="container flex border-2 p-2  ">
+    <header className="bg-light-theme sticky w-full top-0 z-40">
+      <nav className="container flex p-2  ">
         <div className="flex items-center gap-2">
           <img className="w-8 object-cover" src="/assets/logo.png" />
           <h1 className="text-[1.2rem] font-bold">Foody</h1>
@@ -18,7 +18,7 @@ const Navbar = () => {
 
         <div className="ml-auto flex items-center gap-6 text-text-light">
           {/* Menu */}
-          <ul className="m-auto flex gap-14 text-[1.1rem]  ">
+          <ul className="m-auto flex gap-[6rem] text-[1.1rem]  ">
             {menuName.map((menu, i) => (
               <li
                 key={i}

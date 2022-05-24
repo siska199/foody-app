@@ -30,10 +30,10 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="container my-10 grid grid-cols-2 gap-2 border-2 bg-light-theme"
+      className="container my-[5rem] grid grid-cols-2 bg-light-theme "
     >
       {/* Left */}
-      <div className="flex flex-col gap-6 border-2 text-[#2e2e2e]">
+      <div className="flex w-[80%] flex-col gap-5 text-[#2e2e2e] ">
         <div className="flex w-[10rem] items-center justify-center gap-2 rounded-full bg-orange-100">
           <h5 className="text-base font-semibold text-orange-500">
             Bike Delivery
@@ -43,15 +43,14 @@ const Home = () => {
           </div>
         </div>
 
-        <h1 className="text-[4.5rem] font-bold tracking-wide ">
+        <h1 className="text-[4.5rem] font-bold tracking-medium ">
           The Fastest Delivery in{' '}
           <span className="text-orange-600">Your City</span>
         </h1>
         <p className="text-base">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit
           doloremque sint ratione voluptatum officia, quos eveniet nihil rerum
-          recusandae molestiae delectus harum sit quis sed, reiciendis ab hic
-          aspernatur mollitia!
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit
         </p>
         <button className="w-[10rem] rounded-lg bg-gradient-to-br from-orange-400 to-orange-500 px-4 py-2 transition-all duration-100 ease-in-out hover:shadow-lg">
           Order Now
@@ -59,16 +58,16 @@ const Home = () => {
       </div>
 
       {/* Right */}
-      <div className="bg-cardOverlay relative flex h-[35rem] justify-end border-2">
-        <div className="absolute top-0 left-0  flex h-full w-full flex-wrap items-center gap-4 ">
+      <div className=" relative flex h-[35rem] justify-end ">
+        <div className="absolute top-0 justify-end flex h-full w-full flex-wrap items-center gap-4 ">
           <div className="flex w-[80%] flex-wrap gap-4 ">
             {heroData.map((data, i) => (
               <div
                 key={i}
-                className="mb-20 flex w-[13rem] flex-col items-center rounded-3xl bg-gray-200 p-5 backdrop-blur-md"
+                className="mb-20 flex w-[12rem] flex-col items-center rounded-3xl  p-5 backdrop-blur-sm bg-white/50"
               >
-                <img className="-mt-20 w-40" src={data.imageSrc} />
-                <h1 className="mt-4 text-xl font-semibold text-gray-500">
+                <img className="-mt-20 w-25" src={data.imageSrc} />
+                <h1 className="mt-4 text-lg font-semibold text-gray-500">
                   {data.name}
                 </h1>
                 <p className="my-3 text-sm font-semibold text-gray-400">
@@ -82,7 +81,8 @@ const Home = () => {
             ))}
           </div>
         </div>
-        <img src="/assets/heroBg.png" />
+        {/* BG hero */}
+        <img src="/assets/heroBg.png" className='w-[60%]' />
       </div>
     </section>
   )
