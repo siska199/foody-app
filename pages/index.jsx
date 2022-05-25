@@ -10,14 +10,12 @@ import ChangeTheme from '../components/ChangeTheme'
 import ModalSignIn from '../components/ModalSignIn'
 import { useSelector } from 'react-redux'
 import { useSession } from 'next-auth/react'
-import { getProviders} from 'next-auth/react'
+import { getProviders } from 'next-auth/react'
 
-const Index = ({providers}) => {
+const Index = ({ providers }) => {
   const theme = useSelector((state) => state.theme.value)
   const showCarts = useSelector((state) => state.carts.value.showCarts)
-  const data = useSession()
-  console.log('data: ', data)
-
+  const showModalAuth = useSelector((state) => state.auth.value.showModal)
   return (
     <div className="">
       <Head>
@@ -34,7 +32,7 @@ const Index = ({providers}) => {
         <AboutUs />
         <Services />
         <ChangeTheme />
-        <ModalSignIn providers={providers} />
+        {showModalAuth && <ModalSignIn providers={providers} />}
       </main>
       <footer>
         <Footer />

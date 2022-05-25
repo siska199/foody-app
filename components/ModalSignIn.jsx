@@ -1,20 +1,28 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { signIn } from 'next-auth/react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FcGoogle } from 'react-icons/fc'
+import { showHideModalAuth } from '../redux/features/authSlice'
 const ModalSignIn = ({ providers }) => {
-  console.log('get Providers: ', providers)
   const theme = useSelector((state) => state.theme.value)
+  const dispatch = useDispatch()
+
   return (
-    <section className="fixed top-0 left-0 z-50  flex h-full w-full bg-black/25   ">
+    <section
+      onClick={() => dispatch(showHideModalAuth(false))}
+      className="fixed top-0 left-0 z-50  flex h-full w-full bg-black/60   "
+    >
       <div
-        className={`m-auto px-10 shadow-2xl ${theme.primaryCard} flex h-[30rem] w-[20rem] flex-col justify-center gap-[2rem] rounded-[2rem]`}
+        onClick={(e) => e.stopPropagation()}
+        className={`m-auto px-10  ${theme.primaryCard} flex h-[30rem] w-[20rem] flex-col justify-center gap-[2rem] rounded-[2rem]`}
       >
         <form action="" className="flex flex-col gap-2  ">
           <h1
             className={`text-center font-bold ${
-              theme.theme == 'light' ? 'text-gray-700' : 'text-white'
+              theme.theme == 'light'
+                ? 'font-medium text-black/80'
+                : 'text-white'
             } text-[2rem]`}
           >
             Sign In
@@ -34,7 +42,11 @@ const ModalSignIn = ({ providers }) => {
           </div>
           <motion.button
             whileTap={{ scale: 0.75 }}
-            className={`mt-3 rounded-md ${theme.theme=="light"?"bg-gray-600 text-white":"bg-orange-300"} p-2 font-medium`}
+            className={`mt-3 rounded-md ${
+              theme.theme == 'light'
+                ? 'bg-gray-600 text-white'
+                : 'bg-orange-300'
+            } p-2 font-medium`}
           >
             Log In
           </motion.button>

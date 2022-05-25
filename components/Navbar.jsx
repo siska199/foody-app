@@ -4,10 +4,12 @@ import { MdShoppingBasket } from 'react-icons/md'
 import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
 import { showCarts } from '../redux/features/cartsSlice'
-import { signIn, useSession } from 'next-auth/react'
-
+import { useSession } from 'next-auth/react'
+import { showHideModalAuth } from '../redux/features/authSlice'
+import DropdownMenu from '../components/DropdownMenu'
 const Navbar = () => {
   const [shadow, setShadow] = useState('')
+  const [showMenu, setShowMenu] = useState(false)
   const { data: session } = useSession()
   const menuName = [
     { name: 'Home', url: '#home' },
@@ -21,7 +23,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleOnScroll = () => {
-      if (window.pageYOffset > 60) {
+      if (window.pageYOffset > 10) {
         setShadow('shadow-lg')
       } else {
         setShadow('')
@@ -83,15 +85,24 @@ const Navbar = () => {
                   <p className="m-auto text-xs text-white">{cartsTotal}</p>
                 </div>
               </motion.div>
-              <motion.img
-                whileTap={{ scale: 0.75 }}
-                className="w-8 cursor-pointer"
-                src="/assets/avatar.png"
-                onClick={() => signIn()}
-              />
+              <div className="relative">
+                <motion.img
+                  whileTap={{ scale: 0.75 }}
+                  className="w-8 cursor-pointer "
+                  src="/assets/avatar.png"
+                  onClick={() => setShowMenu(!showMenu)}
+                />
+                {showMenu && <DropdownMenu />}
+              </div>
             </div>
           ) : (
-            <button className={`${theme.primaryCard} rounded-xl px-3 py-2 text-white`}>Sign In</button>
+            <button
+              id="dropdownInformationButton"
+              onClick={() => disptach(showHideModalAuth(true))}
+              className={`${theme.primaryCard} rounded-xl px-3 py-2 text-white`}
+            >
+              Sign In
+            </button>
           )}
         </div>
       </nav>
