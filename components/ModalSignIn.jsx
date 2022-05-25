@@ -19,10 +19,8 @@ const ModalSignIn = ({ providers }) => {
       >
         <form action="" className="flex flex-col gap-2  ">
           <h1
-            className={`text-center font-bold ${
-              theme.theme == 'light'
-                ? 'font-medium text-black/80'
-                : 'text-white'
+            className={`text-center font-bold text-white ${
+              theme.theme == 'light' && 'font-medium '
             } text-[2rem]`}
           >
             Sign In
@@ -42,10 +40,10 @@ const ModalSignIn = ({ providers }) => {
           </div>
           <motion.button
             whileTap={{ scale: 0.75 }}
-            className={`mt-3 rounded-md ${
+            className={`mt-3 rounded-md text-white ${
               theme.theme == 'light'
-                ? 'bg-gray-600 text-white'
-                : 'bg-orange-300'
+                ? 'bg-gray-700 e'
+                : 'bg-orange-600 !font-bold'
             } p-2 font-medium`}
           >
             Log In

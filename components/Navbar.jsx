@@ -99,7 +99,7 @@ const Navbar = () => {
             <button
               id="dropdownInformationButton"
               onClick={() => disptach(showHideModalAuth(true))}
-              className={`${theme.primaryCard} rounded-xl px-3 py-2 text-white`}
+              className={`${theme.primaryCard} rounded-xl px-3 py-1 text-white`}
             >
               Sign In
             </button>

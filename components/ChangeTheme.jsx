@@ -34,9 +34,9 @@ const ChangeTheme = () => {
     <motion.div
       whileTap={{ scale: 0.75 }}
       onClick={() => handleChangeTheme()}
-      className="fixed z-[999] bottom-4 right-5 cursor-pointer rounded-full bg-white p-2 text-[2rem] text-white shadow-lg"
+      className="fixed z-[999] bottom-4 right-5 cursor-pointer rounded-full bg-red-custome p-2 text-[2rem] text-white shadow-lg"
     >
-      <WiMoonAltFirstQuarter color="black" />
+      <WiMoonAltFirstQuarter color="" />
     </motion.div>
   )
 }
