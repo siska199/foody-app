@@ -1,9 +1,8 @@
 import React from 'react'
 
-const addItem= () => {
-  return (
-    <div>add-items</div>
-  )
+const additem = () => {
+  return <div></div>
 }
 
-export default addItem
+additem.auth = true
+export default additem

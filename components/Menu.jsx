@@ -22,6 +22,7 @@ const Menu = () => {
   }))
 
   const dataIcon = [...Array(5)].map((_, i) => ({
+    id: uuidv4(),
     title: 'Category',
     icon: (
       <IoFastFood className="text-[1.3rem] text-white group-hover:text-text-light" />
@@ -35,7 +36,7 @@ const Menu = () => {
         <MenuTitle theme={theme} title={'Our Fresh & Healthy Fruits'} />
         <div className="my-[3rem] flex w-full flex-wrap justify-center gap-3 md:my-[7rem] md:flex-nowrap md:justify-between">
           {dataFruites.map((data, i) => (
-            <CardFood key={i} data={data} />
+            <CardFood key={data.id} data={data} />
           ))}
         </div>
       </div>
@@ -43,13 +44,13 @@ const Menu = () => {
         <MenuTitle theme={theme} title={'Our Hot Dishes'} />
         <div className="my-8 flex w-full flex-wrap justify-center gap-2 md:my-10 md:gap-4 ">
           {dataIcon.map((data, i) => (
-            <CardCategory data={data} key={i} />
+            <CardCategory data={data} key={data.id} />
           ))}
         </div>
         <div className="mt-[3rem] flex flex-wrap justify-center gap-3 md:mx-[7rem] md:mt-[7rem]">
           {dataHotDishes.map((data, i) => (
             <div className="md:mb-[3rem]">
-              <CardFood key={i} data={data} />
+              <CardFood key={data.id} data={data} />
             </div>
           ))}
         </div>

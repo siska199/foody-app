@@ -70,7 +70,7 @@ const Home = () => {
         </p>
         <motion.button
           whileTap={{ scale: 0.75 }}
-          className={`w-[10rem] rounded-lg bg-gradient-to-br ${theme.theme=="light"?"from-orange-400 to-orange-500":"from-black to-orange-500"}  px-4 py-2 transition-all duration-100 ease-in-out hover:shadow-lg`}
+          className={`w-[10rem] rounded-lg bg-gradient-to-br ${theme.theme=="light"?"from-orange-400 to-orange-500":"bg-[#222325]"}  px-4 py-2 transition-all duration-100 ease-in-out hover:shadow-lg`}
         >
           Order Now
         </motion.button>

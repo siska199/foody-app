@@ -7,10 +7,17 @@ import AboutUs from '../components/AboutUs'
 import Services from '../components/Services'
 import Footer from '../components/Footer'
 import ChangeTheme from '../components/ChangeTheme'
+import ModalSignIn from '../components/ModalSignIn'
 import { useSelector } from 'react-redux'
-const Index = () => {
+import { useSession } from 'next-auth/react'
+import { getProviders} from 'next-auth/react'
+
+const Index = ({providers}) => {
   const theme = useSelector((state) => state.theme.value)
   const showCarts = useSelector((state) => state.carts.value.showCarts)
+  const data = useSession()
+  console.log('data: ', data)
+
   return (
     <div className="">
       <Head>
@@ -27,6 +34,7 @@ const Index = () => {
         <AboutUs />
         <Services />
         <ChangeTheme />
+        <ModalSignIn providers={providers} />
       </main>
       <footer>
         <Footer />
@@ -36,3 +44,10 @@ const Index = () => {
 }
 
 export default Index
+
+export async function getServerSideProps(context) {
+  const providers = await getProviders()
+  return {
+    props: { providers },
+  }
+}
