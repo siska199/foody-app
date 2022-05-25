@@ -2,19 +2,24 @@ import '../styles/globals.css'
 import { SessionProvider, useSession, signIn } from 'next-auth/react'
 import { useEffect } from 'react'
 import { Loading } from '../components/Loading'
+
+import { Provider } from 'react-redux'
+import store from '../redux/store'
 export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }) {
   return (
     <SessionProvider session={session}>
-      {Component.auth ? (
-        <Auth>
+      <Provider store={store}>
+        {Component.auth ? (
+          <Auth>
+            <Component {...pageProps} />
+          </Auth>
+        ) : (
           <Component {...pageProps} />
-        </Auth>
-      ) : (
-        <Component {...pageProps} />
-      )}
+        )}
+      </Provider>
     </SessionProvider>
   )
 }

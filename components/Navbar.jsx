@@ -1,16 +1,37 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdShoppingBasket } from 'react-icons/md'
 import { motion } from 'framer-motion'
+import { useDispatch, useSelector } from 'react-redux'
+import { showCarts } from '../redux/features/cartsSlice'
 const Navbar = () => {
+  const [shadow, setShadow] = useState('')
   const menuName = [
     { name: 'Home', url: '#home' },
     { name: 'Menu', url: '#menu' },
     { name: 'About Us', url: '#about-us' },
     { name: 'Service', url: '#service' },
   ]
+  const theme = useSelector((state) => state.theme.value)
+  const cartsTotal = useSelector((state) => state.carts.value.totalQty)
+  const disptach = useDispatch()
+
+  useEffect(() => {
+    const handleOnScroll = () => {
+      if (window.pageYOffset > 60) {
+        setShadow('shadow-lg')
+      } else {
+        setShadow('')
+      }
+    }
+    window.addEventListener('scroll', handleOnScroll)
+    return ()=>window.removeEventListener('scroll', handleOnScroll)
+  }, [])
+
   return (
-    <header className="fixed left-0 top-0 z-40 w-full bg-light-theme ">
+    <header
+      className={`fixed ${shadow} left-0 top-0 z-40 w-full ${theme.bg}  `}
+    >
       <nav className="container flex px-8 py-2  ">
         <Link href="/">
           <motion.div
@@ -18,17 +39,28 @@ const Navbar = () => {
             className="flex cursor-pointer items-center gap-2"
           >
             <img className="w-8 object-cover" src="/assets/logo.png" />
-            <h1 className="text-[1.2rem] font-bold">Foody</h1>
+            <h1 className={`text-[1.2rem] font-bold ${theme.textMainColor}  `}>
+              Foody
+            </h1>
           </motion.div>
         </Link>
 
-        <div className="ml-auto flex items-center gap-6 text-text-light">
-          {/* Menu */}
-          <ul className="m-auto hidden md:flex md:gap-[2rem] lg:gap-[6rem] md:text-[1rem] lg:text-[1.1rem]  ">
+        <div
+          className={`ml-auto flex items-center gap-6 ${theme.textMainColor}  `}
+        >
+          <ul
+            className={`m-auto hidden md:flex md:gap-[2rem] md:text-[1rem] lg:gap-[6rem] lg:text-[1.1rem]  ${
+              theme.theme == 'dark' && 'font-[300]'
+            }`}
+          >
             {menuName.map((menu, i) => (
               <li
                 key={i}
-                className="cursor-pointer transition-all duration-100 ease-in-out hover:font-medium hover:text-[#2e2e2e]"
+                className={`cursor-pointer transition-all duration-100 ease-out hover:font-medium ${
+                  theme.theme == 'light'
+                    ? 'hover:text-[#2e2e2e]'
+                    : 'hover:text-white'
+                } `}
               >
                 <Link href={`${menu.url}`}>
                   <a>{menu.name}</a>
@@ -36,17 +68,16 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          {/* Bag Shoping Char */}
           <motion.div
             whileTap={{ scale: 0.75 }}
             className="relative cursor-pointer"
+            onClick={() => disptach(showCarts(true))}
           >
             <MdShoppingBasket className=" text-[1.5rem]" />
             <div className="absolute -top-2 -right-2 flex h-5 w-5 rounded-full bg-red-custome  text-white">
-              <p className="m-auto text-xs">2</p>
+              <p className="m-auto text-xs text-white">{cartsTotal}</p>
             </div>
           </motion.div>
-          {/* Avatar */}
           <div>
             <motion.img
               whileTap={{ scale: 0.75 }}

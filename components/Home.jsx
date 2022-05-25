@@ -1,5 +1,7 @@
 import React from 'react'
+import CardHero from './CardHero'
 import { motion } from 'framer-motion'
+import { useSelector } from 'react-redux'
 const Home = () => {
   const heroData = [
     {
@@ -27,62 +29,67 @@ const Home = () => {
       imageSrc: '/assets/fi1.png',
     },
   ]
+  const theme = useSelector((state) => state.theme.value)
+
   return (
     <section
       id="home"
-      className="container pt-[7rem] grid grid-cols-1 md:grid-cols-2 bg-light-theme "
+      className="bg-transparen container grid grid-cols-1 pt-[7rem] md:grid-cols-2"
     >
       {/* Left */}
-      <div className="flex md:w-[90%] flex-col gap-5 text-[#2e2e2e] ">
-        <div className="flex w-[10rem] items-center justify-center gap-2 rounded-full bg-orange-100">
-          <h5 className="text-base font-semibold text-orange-500">
+      <div className={`flex flex-col gap-5 md:w-[90%] ${theme.textMainColor} `}>
+        <div
+          className={`flex w-[10rem] items-center justify-center gap-2 rounded-full ${
+            theme.theme == 'light' ? 'bg-orange-100' : 'bg-orange-200 p-1'
+          } p-1`}
+        >
+          <h5
+            className={`text-base font-semibold ${
+              theme.theme == 'light' ? 'text-orange-300' : 'text-orange-500'
+            } `}
+          >
             Bike Delivery
           </h5>
-          <div className="h-8 w-8 overflow-hidden rounded-full bg-white drop-shadow-xl">
+          <div className="h-[1.7rem] w-[1.7rem] overflow-hidden rounded-full bg-white drop-shadow-xl">
             <img src="/assets/delivery.png" alt="" />
           </div>
         </div>
 
-        <h1 className="text-[3rem] md:text-[3rem] lg:text-[4rem] font-bold tracking-medium ">
+        <h1 className="tracking-medium text-[3rem] font-bold md:text-[3rem] lg:text-[4rem] ">
           The Fastest Delivery in{' '}
-          <span className="text-orange-600">Your City</span>
+          <span className={`${theme.primaryText}`}>Your City</span>
         </h1>
-        <p className="text-sm md:text-base ">
+        <p
+          className={`text-sm md:text-base ${
+            theme.theme == 'dark' && 'font-[300]'
+          } `}
+        >
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit
           doloremque sint ratione voluptatum officia, quos eveniet nihil rerum
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit
         </p>
-        <motion.button whileTap={{scale:0.75}} className="w-[10rem] rounded-lg bg-gradient-to-br from-orange-400 to-orange-500 px-4 py-2 transition-all duration-100 ease-in-out hover:shadow-lg">
+        <motion.button
+          whileTap={{ scale: 0.75 }}
+          className={`w-[10rem] rounded-lg bg-gradient-to-br ${theme.theme=="light"?"from-orange-400 to-orange-500":"from-black to-orange-500"}  px-4 py-2 transition-all duration-100 ease-in-out hover:shadow-lg`}
+        >
           Order Now
         </motion.button>
       </div>
 
       {/* Right */}
-      <div className="relative flex md:h-[35rem] md:justify-end mt-10 md:mt-0 ">
-        <div className="absolute top-0 md:justify-end flex h-full w-full flex-wrap items-center gap-4 ">
-          <div className="flex py-2 px-2 md:px-0 md:py-5 md:w-[90%] justify-center flex-wrap gap-2 md:gap-4">
+      <div className="relative mt-10 flex md:mt-0 md:h-[35rem] md:justify-end ">
+        <div className="absolute top-0 flex h-full w-full flex-wrap items-center gap-4 md:justify-end ">
+          <div className="flex flex-wrap justify-center gap-2 py-2 px-2 md:w-[90%] md:gap-4 md:px-0 md:py-5">
             {heroData.map((data, i) => (
-              <div
-                key={i}
-                className="md:mb-20 flex w-[8.5rem] lg:w-[12rem] flex-col items-center rounded-3xl  p-5 backdrop-blur-sm bg-white/50"
-              >
-                <img className="md:-mt-20 w-[7rem] md:w-[10rem] " src={data.imageSrc} />
-                <h1 className="md:mt-4 text-center text-lg font-semibold text-gray-500">
-                  {data.name}
-                </h1>
-                <p className="md:my-3 text-center text-[0.7rem] md:text-sm md:font-semibold text-gray-400">
-                  {data.desc}
-                </p>
-                <p className="text-sm font-semibold text-gray-700">
-                  <span className="text-sm text-red-600">$</span>
-                  {data.price}
-                </p>
-              </div>
+              <CardHero key={i} data={data} />
             ))}
           </div>
         </div>
         {/* BG hero */}
-        <img src="/assets/heroBg.png" className='w-[100%] md:w-[80%] lg:w-[60%]' />
+        <img
+          src="/assets/heroBg.png"
+          className="w-[100%] md:w-[80%] lg:w-[60%]"
+        />
       </div>
     </section>
   )

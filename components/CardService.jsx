@@ -1,11 +1,17 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const CardService = ({ data }) => {
+
+  const theme = useSelector(state=>state.theme.value)
+
   return (
-    <div className="hover:bg-orange-400 flex md:w-[12rem] w-[9rem] text-white text-center p-5 flex-col items-center justify-center space-y-[1rem] bg-orange-500">
-      <div className='text-[5rem] '>{data.icon}</div>
+    <div
+      className={`flex w-[9rem] flex-col items-center justify-center space-y-[1rem] p-5 text-center text-white hover:bg-orange-400 md:w-[12rem] ${theme.primaryCard}`}
+    >
+      <div className="text-[5rem] ">{data.icon}</div>
       <h1>{data.title}</h1>
-      <p className='font-thin text-sm '>{data.desc}</p>
+      <p className="text-sm font-thin ">{data.desc}</p>
     </div>
   )
 }
