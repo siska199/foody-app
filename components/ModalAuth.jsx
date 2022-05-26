@@ -8,7 +8,7 @@ import FormAuth from './FormAuth'
 const ModalAuth = ({ providers }) => {
   const theme = useSelector((state) => state.theme.value)
   const [typeAuth, setTypeAuth] = useState('signIn')
-  const dispatch = useDispatch()
+const dispatch = useDispatch()
 
   return (
     <section

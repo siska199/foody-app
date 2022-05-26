@@ -4,7 +4,6 @@ import CardFood from './CardFood'
 import CardCategory from './CardCategory'
 import { IoFastFood } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
-import { motion } from 'framer-motion'
 const Menu = () => {
   const dataFruites = [...Array(5)].map((_, i) => ({
     id: uuidv4(),

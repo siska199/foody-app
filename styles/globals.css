@@ -21,4 +21,7 @@ html,body{
     .container{
         @apply max-w-[1500px] mx-auto 
     }
+    .input-address{
+        @apply outline-none px-3 border-2 rounded-md py-2
+    }
   }

@@ -45,9 +45,5 @@ function Auth({ children }) {
   if (isUser) {
     return children
   }
-  return (
-    <div className="flex h-[100vh] w-[100vw] items-center justify-center bg-black text-[2rem] font-thin text-white">
-      Loading...
-    </div>
-  )
+  return <LoadingPage />
 }

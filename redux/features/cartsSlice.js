@@ -26,10 +26,12 @@ const cartsSlice = createSlice({
       console.log(indexData)
       if (indexData != -1) {
         state.value.dataCarts[indexData].qty += 1
+        state.value.dataCarts[indexData].totalPrice += payload.price
       } else {
         state.value.dataCarts.push({
           ...payload,
           qty: 1,
+          totalPrice: payload.price,
         })
       }
     },
@@ -48,6 +50,7 @@ const cartsSlice = createSlice({
       }
       if (indexData != -1) {
         state.value.dataCarts[indexData].qty -= 1
+        state.value.dataCarts[indexData].totalPrice -= payload.price
       }
     },
     deleteAllCharts: (state) => {
