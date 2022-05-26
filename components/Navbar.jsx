@@ -12,10 +12,10 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false)
   const { data: session } = useSession()
   const menuName = [
-    { name: 'Home', url: '#home' },
-    { name: 'Menu', url: '#menu' },
-    { name: 'About Us', url: '#about-us' },
-    { name: 'Service', url: '#service' },
+    { name: 'Home', url: '/#home' },
+    { name: 'Menu', url: '/#menu' },
+    { name: 'About Us', url: '/#about-us' },
+    { name: 'Service', url: '/#service' },
   ]
   const theme = useSelector((state) => state.theme.value)
   const cartsTotal = useSelector((state) => state.carts.value.totalQty)

@@ -1,23 +1,33 @@
 import '../styles/globals.css'
+import { useEffect, useState } from 'react'
 import { SessionProvider, useSession, signIn } from 'next-auth/react'
-import { useEffect } from 'react'
-
 import { Provider } from 'react-redux'
+import LoadingPage from '../components/LoadingPage'
+import Router from 'next/router'
 import store from '../redux/store'
 
 export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const [loading, setLoading] = useState(false)
+  Router.events.on('routeChangeStart', (url) => {
+    setLoading(true)
+  })
+  Router.events.on('routeChangeComplete', (url) => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+  })
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
         {Component.auth ? (
           <Auth>
-            <Component {...pageProps} />
+            {loading ? <LoadingPage /> : <Component {...pageProps} />}
           </Auth>
         ) : (
-          <Component {...pageProps} />
+          <>{loading ? <LoadingPage /> : <Component {...pageProps} />}</>
         )}
       </Provider>
     </SessionProvider>

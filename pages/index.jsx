@@ -7,7 +7,7 @@ import AboutUs from '../components/AboutUs'
 import Services from '../components/Services'
 import Footer from '../components/Footer'
 import ChangeTheme from '../components/ChangeTheme'
-import ModalSignIn from '../components/ModalSignIn'
+import ModalAuth from '../components/ModalAuth'
 import { useSelector } from 'react-redux'
 import { getProviders } from 'next-auth/react'
 
@@ -31,7 +31,7 @@ const Index = ({ providers }) => {
         <AboutUs />
         <Services />
         <ChangeTheme />
-        {showModalAuth && <ModalSignIn providers={providers} />}
+        {showModalAuth && <ModalAuth providers={providers} />}
       </main>
       <footer>
         <Footer />

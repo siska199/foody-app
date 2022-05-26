@@ -4,7 +4,7 @@ import CardFood from './CardFood'
 import CardCategory from './CardCategory'
 import { IoFastFood } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
-
+import { motion } from 'framer-motion'
 const Menu = () => {
   const dataFruites = [...Array(5)].map((_, i) => ({
     id: uuidv4(),
@@ -21,7 +21,7 @@ const Menu = () => {
     price: 12,
   }))
 
-  const dataIcon = [...Array(5)].map((_, i) => ({
+  const dataIcon = [...Array(7)].map((_, i) => ({
     id: uuidv4(),
     title: 'Category',
     icon: (
@@ -49,8 +49,8 @@ const Menu = () => {
         </div>
         <div className="mt-[3rem] flex flex-wrap justify-center gap-3 md:mx-[7rem] md:mt-[7rem]">
           {dataHotDishes.map((data, i) => (
-            <div className="md:mb-[3rem]">
-              <CardFood key={data.id} data={data} />
+            <div key={data.id} className="md:mb-[3rem]">
+              <CardFood data={data} />
             </div>
           ))}
         </div>

@@ -10,10 +10,16 @@ import { BiDollar } from 'react-icons/bi'
 import { IoCloseOutline } from 'react-icons/io5'
 import { v4 as uuidv4 } from 'uuid'
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 const additem = () => {
+  const dataCategories = [...Array(7)].map((_, i) => ({
+    id: uuidv4(),
+    title: 'Category' + i,
+  }))
   const imageRef = useRef(null)
   const [imageUrl, setImageUrl] = useState(null)
+
+  const theme = useSelector((state) => state.theme.value)
+
   const [form, setForm] = useState({
     title: '',
     category: '',
@@ -21,13 +27,6 @@ const additem = () => {
     calories: '',
     price: '',
   })
-  const theme = useSelector((state) => state.theme.value)
-
-  const dataCategories = [...Array(7)].map((_, i) => ({
-    id: uuidv4(),
-    title: 'Category' + i,
-  }))
-
   const handleOnChange = (e) => {
     const inputName = e.target.name
     setForm({
@@ -53,6 +52,11 @@ const additem = () => {
     e.preventDefault()
     console.log('form: ', form)
   }
+
+  const [category, setCategory] = useState('')
+  const handleAddcategory = (e) => {
+    e.preventDefault()
+  }
   return (
     <div>
       <Head>
@@ -75,18 +79,38 @@ const additem = () => {
               className="w-full bg-transparent px-5 py-2 outline-none placeholder:text-gray-800"
             />
           </div>
-          <select
-            name="category"
-            className="w-full rounded-lg p-2 outline-none"
-            onChange={(e) => handleOnChange(e)}
-            value={form.category}
-          >
-            {dataCategories.map((data) => (
-              <option key={data.id} value={`${data.title}`}>
-                {data.title}
-              </option>
-            ))}
-          </select>
+          <div className="grid grid-cols-2 gap-3">
+            <select
+              name="category"
+              className="w-full rounded-lg p-2 outline-none"
+              onChange={(e) => handleOnChange(e)}
+              value={form.category}
+            >
+              {dataCategories.map((data) => (
+                <option key={data.id} value={`${data.title}`}>
+                  {data.title}
+                </option>
+              ))}
+            </select>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="Add Category"
+                className="border-b-[0.2rem] bg-transparent px-5 py-2 outline-none placeholder:text-gray-800"
+                name=""
+                id=""
+                onChange={(e) => setCategory(e.target.value)}
+              />
+              <motion.button
+                whileTap={{ scale: 0.75 }}
+                onClick={(e) => handleAddcategory(e)}
+                className="rounded-lg border-[0.2rem] px-2 hover:bg-white"
+              >
+                Add
+              </motion.button>
+            </div>
+          </div>
+
           <div
             onClick={() => imageUrl == null && imageRef.current.click()}
             className="flex h-[20rem] w-full cursor-pointer flex-col items-center justify-center rounded-lg border-[0.17rem] text-gray-600"
