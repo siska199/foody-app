@@ -4,6 +4,7 @@ import { signIn } from 'next-auth/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FcGoogle } from 'react-icons/fc'
 import { showHideModalAuth } from '../redux/features/authSlice'
+
 const ModalSignIn = ({ providers }) => {
   const theme = useSelector((state) => state.theme.value)
   const dispatch = useDispatch()

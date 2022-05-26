@@ -11,7 +11,10 @@ const CardFood = ({ data }) => {
     disptach(addToCarts(data))
   }
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1 }}
       className={`flex flex-col items-center justify-between gap-2 md:w-[15rem] ${theme.cardColor} p-3 backdrop-blur-sm hover:${theme.cardColor} mb-5 hover:shadow-lg md:mb-0`}
     >
       <div className="relative flex w-full justify-end ">
@@ -68,7 +71,7 @@ const CardFood = ({ data }) => {
           </h5>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 export default CardFood

@@ -11,7 +11,7 @@ const DropdownMenu = () => {
         aria-labelledby="dropdownInformationButton"
       >
         <Link href="/add-item" className=''>
-          <a class="px-4 py-2 hover:bg-gray-100 flex items-center gap-1"><IoIosAddCircleOutline className='text-[1rem]'/> Add Menu</a>
+          <a className="px-4 py-2 hover:bg-gray-100 flex items-center gap-1"><IoIosAddCircleOutline className='text-[1rem]'/> Add Menu</a>
         </Link>
       </ul>
       <div onClick={() => signOut()} className="py-1">

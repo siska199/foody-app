@@ -1,7 +1,6 @@
 import '../styles/globals.css'
 import { SessionProvider, useSession, signIn } from 'next-auth/react'
 import { useEffect } from 'react'
-import Loading from '../components/Loading'
 
 import { Provider } from 'react-redux'
 import store from '../redux/store'
@@ -38,7 +37,7 @@ function Auth({ children }) {
   }
   return (
     <div className="flex h-[100vh] w-[100vw] items-center justify-center bg-black text-[2rem] font-thin text-white">
-      <Loading />
+      Loading...
     </div>
   )
 }

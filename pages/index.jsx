@@ -9,7 +9,6 @@ import Footer from '../components/Footer'
 import ChangeTheme from '../components/ChangeTheme'
 import ModalSignIn from '../components/ModalSignIn'
 import { useSelector } from 'react-redux'
-import { useSession } from 'next-auth/react'
 import { getProviders } from 'next-auth/react'
 
 const Index = ({ providers }) => {
