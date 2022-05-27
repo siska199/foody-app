@@ -7,7 +7,7 @@ import { showCarts } from '../redux/features/cartsSlice'
 import { useSession } from 'next-auth/react'
 import { showHideModalAuth } from '../redux/features/authSlice'
 import DropdownMenu from '../components/DropdownMenu'
-const Navbar = () => {
+const Navbar = ({ home }) => {
   const [shadow, setShadow] = useState('')
   const [showMenu, setShowMenu] = useState(false)
   const { data: session } = useSession()
@@ -53,26 +53,29 @@ const Navbar = () => {
         <div
           className={`ml-auto flex items-center gap-6 ${theme.textMainColor}  `}
         >
-          <ul
-            className={`m-auto hidden md:flex md:gap-[2rem] md:text-[1rem] lg:gap-[6rem] lg:text-[1.1rem]  ${
-              theme.theme == 'dark' && 'font-[300]'
-            }`}
-          >
-            {menuName.map((menu, i) => (
-              <li
-                key={i}
-                className={`cursor-pointer transition-all duration-100 ease-out hover:font-medium ${
-                  theme.theme == 'light'
-                    ? 'hover:text-[#2e2e2e]'
-                    : 'hover:text-white'
-                } `}
-              >
-                <Link href={`${menu.url}`}>
-                  <a>{menu.name}</a>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {home && (
+            <ul
+              className={`m-auto hidden md:flex md:gap-[2rem] md:text-[1rem] lg:gap-[6rem] lg:text-[1.1rem]  ${
+                theme.theme == 'dark' && 'font-[300]'
+              }`}
+            >
+              {menuName.map((menu, i) => (
+                <li
+                  key={i}
+                  className={`cursor-pointer transition-all duration-100 ease-out hover:font-medium ${
+                    theme.theme == 'light'
+                      ? 'hover:text-[#2e2e2e]'
+                      : 'hover:text-white'
+                  } `}
+                >
+                  <Link href={`${menu.url}`}>
+                    <a>{menu.name}</a>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+
           {session ? (
             <div className="flex items-center gap-[1.5rem]">
               <motion.div

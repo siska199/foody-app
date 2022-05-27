@@ -1,10 +1,10 @@
-import React from 'react'
 import { motion } from 'framer-motion'
 import { HiArrowLeft } from 'react-icons/hi'
 import { IoNuclearOutline } from 'react-icons/io5'
 import { showCarts, deleteAllCharts } from '../redux/features/cartsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import CartsInfo from "./CartsInfo"
+
 const Carts = () => {
   const carts = useSelector((state) => state.carts.value)
   const dispatch = useDispatch()

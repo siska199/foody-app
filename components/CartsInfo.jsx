@@ -1,13 +1,20 @@
-import React from 'react'
 import { motion } from 'framer-motion'
-import CardCart from './CardCart'
 import { useRouter } from 'next/router'
-
+import { useDispatch } from 'react-redux'
+import CardCart from './CardCart'
+import { showCarts } from '../redux/features/cartsSlice'
 const CartsInfo = ({ carts, shipping }) => {
+  //**Constanta**\\
   const router = useRouter()
+  const dispatch = useDispatch()
 
+  //**Handler**\\
+  const handlerMovePage = () => {
+    shipping ? router.push('/') : router.push('/payment')
+    dispatch(showCarts(false))
+  }
   return (
-    <div className="flex w-full flex-col justify-between border-2">
+    <div className={`flex w-full flex-col justify-between border-2 ${shipping&&"bg-white"}`}>
       <div className="flex h-[45%] flex-col gap-3 overflow-y-scroll scrollbar-thin">
         {carts.dataCarts.map((data, i) => (
           <CardCart shipping={shipping} data={data} key={i} />
@@ -37,11 +44,11 @@ const CartsInfo = ({ carts, shipping }) => {
         </div>
         <div className="flex justify-center">
           <motion.button
-            onClick={() => shipping?router.push('/'):router.push('/payment')}
+            onClick={() => handlerMovePage()}
             whileTap={{ scale: 0.9 }}
             className="my-4 w-full rounded-lg bg-gradient-to-r from-orange-400 to-orange-500 p-2 px-5"
           >
-            {shipping?"Pay":"Check Out"}
+            {shipping ? 'Pay' : 'Check Out'}
           </motion.button>
         </div>
       </div>

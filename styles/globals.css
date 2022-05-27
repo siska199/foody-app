@@ -19,9 +19,9 @@ html,body{
 
 @layer components {
     .container{
-        @apply max-w-[1500px] mx-auto 
+        @apply max-w-[1500px] mx-auto
     }
-    .input-address{
-        @apply outline-none px-3 border-2 rounded-md py-2
+    .input-shipping{
+        @apply outline-none px-3 border-2 rounded-md py-1 text-[0.8rem] 
     }
   }

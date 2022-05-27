@@ -79,7 +79,7 @@ const Home = () => {
       {/* Right */}
       <div className="relative mt-10 flex md:mt-0 md:h-[35rem] md:justify-end ">
         <div className="absolute top-0 flex h-full w-full flex-wrap items-center gap-4 md:justify-end ">
-          <div className="flex flex-wrap justify-center gap-2 py-2 px-2 md:w-[90%] md:gap-4 md:px-0 md:py-5">
+          <div className="flex flex-wrap justify-center gap-2 py-2 px-2 md:w-[80%] md:gap-4 md:px-0 md:py-5">
             {heroData.map((data, i) => (
               <CardHero key={i} data={data} />
             ))}
