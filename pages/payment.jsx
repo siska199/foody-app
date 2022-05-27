@@ -15,15 +15,15 @@ const payment = () => {
   const steps = [
     {
       title: 'Address',
-      icon: <RiEBike2Line className="text-[2rem]" />,
+      icon: <RiEBike2Line className="text-[1.5rem]" />,
     },
     {
       title: 'Payment',
-      icon: <MdPayment className="text-[2rem]" />,
+      icon: <MdPayment className="text-[1.5rem]" />,
     },
     {
       title: 'Review',
-      icon: <MdOutlineVerified className="text-[2rem]" />,
+      icon: <MdOutlineVerified className="text-[1.5rem]" />,
     },
   ]
   const [stepShipping, setStepShipping] = useState('address')
@@ -43,22 +43,22 @@ const payment = () => {
   return (
     <Layout title={'Add product'}>
       <div className="container flex min-h-[100vh]">
-        <div
-          className={`n m-auto my-[4rem] flex w-[40rem] flex-col gap-[3rem] p-8 `}
-        >
+        <div className={`n m-auto my-[2rem] flex flex-col gap-[3rem] p-8 `}>
           <ul className="flex items-center justify-center gap-4 lg:gap-16">
             {steps.map((data, i) => (
-              <li
-                key={i}
-                className={`before:content relative flex h-[5.8rem] w-[5.8rem] flex-col items-center justify-center rounded-full border-2 p-3 ${
-                  stepShipping == data.title.toLocaleLowerCase()
-                    ? 'border-[0.3rem] bg-sky-300 text-white'
-                    : ''
-                }  `}
-              >
-                {data.icon}
-                Step {` ${i + 1}`}
-              </li>
+              <div>
+                <li
+                  key={i}
+                  className={`before:content relative flex h-[4rem] w-[4rem] flex-col items-center justify-center rounded-full border-2 p-3 ${
+                    stepShipping == data.title.toLocaleLowerCase()
+                      ? 'border-[0.3rem] bg-sky-300 text-white'
+                      : ''
+                  }  `}
+                >
+                  {data.icon}
+                </li>
+                <p className='text-center'>{`Step ${i+1}`}</p>
+              </div>
             ))}
           </ul>
 

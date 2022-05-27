@@ -14,7 +14,11 @@ const CartsInfo = ({ carts, shipping }) => {
     dispatch(showCarts(false))
   }
   return (
-    <div className={`flex w-full flex-col justify-between border-2 ${shipping&&"bg-white"}`}>
+    <div
+      className={`flex w-full flex-col ${
+        shipping && 'h-[23rem]'
+      } justify-between border-2 ${shipping && 'bg-white'}`}
+    >
       <div className="flex h-[45%] flex-col gap-3 overflow-y-scroll scrollbar-thin">
         {carts.dataCarts.map((data, i) => (
           <CardCart shipping={shipping} data={data} key={i} />
@@ -42,15 +46,17 @@ const CartsInfo = ({ carts, shipping }) => {
             {carts.totalPrice + carts.deliveryCost}
           </p>
         </div>
-        <div className="flex justify-center">
-          <motion.button
-            onClick={() => handlerMovePage()}
-            whileTap={{ scale: 0.9 }}
-            className="my-4 w-full rounded-lg bg-gradient-to-r from-orange-400 to-orange-500 p-2 px-5"
-          >
-            {shipping ? 'Pay' : 'Check Out'}
-          </motion.button>
-        </div>
+        {!shipping && (
+          <div className="flex justify-center">
+            <motion.button
+              onClick={() => handlerMovePage()}
+              whileTap={{ scale: 0.9 }}
+              className="my-4 w-full rounded-lg bg-gradient-to-r from-orange-400 to-orange-500 p-2 px-5"
+            >
+              Check Out
+            </motion.button>
+          </div>
+        )}
       </div>
     </div>
   )

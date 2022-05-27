@@ -20,8 +20,7 @@ const CardCart = ({ data, shipping }) => {
       </div>
       {shipping ? (
         <div className="flex flex-col justify-center text-sm font-[300]">
-          <p>Total Qty: $ {data.qty}</p>
-          <p>Total price: $ {data.totalPrice}</p>
+          <p>X {qty}</p>
         </div>
       ) : (
         <div className="flex items-center gap-4  font-[300]">

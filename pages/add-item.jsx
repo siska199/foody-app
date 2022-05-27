@@ -58,7 +58,7 @@ const additem = () => {
   }
   return (
     <Layout>
-      <div className="container flex min-h-[100vh] items-center pt-[3rem] md:pt-0 justify-center ">
+      <div className="container flex min-h-[100vh] items-center mt-[2rem] pt-[3rem] md:pt-0 justify-center ">
         <form
           className={`flex w-[50rem] flex-col gap-4 rounded-lg border-[0.17rem] p-4 ${
             theme.theme == 'light' ? 'bg-transparent' : 'bg-white'
@@ -75,7 +75,7 @@ const additem = () => {
             />
           </div>
           <div className="flex gap-3 justify-between">
-            <div className='flex md:w-1/2'>
+            <div className='flex  h-[3rem] md:w-1/2'>
               <select
                 name="category"
                 className="w-full rounded-lg border-2 p-2 outline-none"
@@ -89,7 +89,7 @@ const additem = () => {
                 ))}
               </select>
             </div>
-            <div className="flex flex-wrap gap-2 md:w-1/2 border-2">
+            <div className="flex flex-wrap gap-2 md:w-1/2">
               <input
                 type="text"
                 placeholder="Add Category"
