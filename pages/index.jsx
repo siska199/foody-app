@@ -7,7 +7,7 @@ import { getProviders } from 'next-auth/react'
 
 const Index = ({ providers }) => {
   return (
-    <Layout title={'Foody'} home={true}  providers={ providers}>
+    <Layout title={'Foody'} home={true} providers={providers}>
       <Home />
       <Menu />
       <AboutUs />

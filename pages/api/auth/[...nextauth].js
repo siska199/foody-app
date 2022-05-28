@@ -1,5 +1,7 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
+import { collection, addDoc, doc, getDoc, setDoc } from 'firebase/firestore'
+import { db } from '../../../firebase.config'
 
 export default NextAuth({
   providers: [
@@ -14,5 +16,21 @@ export default NextAuth({
   },
   theme: {
     colorScheme: 'light',
+  },
+  callbacks: {
+    async signIn({ user }) {
+      const docSnap = await getDoc(doc(db, 'users', user.email))
+
+      if (!docSnap.exists()) {
+        await setDoc(doc(collection(db, 'users'), user.email), {
+          name: user.name,
+          username: user.name.split(' ').join('').toLocaleLowerCase(),
+          email: user.email,
+          image: user.image,
+          role: 'user',
+        })
+      }
+      return true
+    },
   },
 })

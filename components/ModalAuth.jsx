@@ -5,10 +5,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FcGoogle } from 'react-icons/fc'
 import { showHideModalAuth } from '../redux/features/authSlice'
 import FormAuth from './FormAuth'
+
 const ModalAuth = ({ providers }) => {
   const theme = useSelector((state) => state.theme.value)
   const [typeAuth, setTypeAuth] = useState('signIn')
-const dispatch = useDispatch()
+  const dispatch = useDispatch()
+
+  const handleAuthWithGoogle = (id) => {
+    signIn(id,{type:typeAuth})
+  }
 
   return (
     <section
@@ -25,7 +30,7 @@ const dispatch = useDispatch()
             <motion.button
               className="flex  items-center justify-center rounded-md bg-white p-2 font-[500]"
               key={provider.name}
-              onClick={() => signIn(provider.id)}
+              onClick={() => handleAuthWithGoogle(provider.id)}
               whileTap={{ scale: 0.75 }}
             >
               <FcGoogle className="mr-2 " />

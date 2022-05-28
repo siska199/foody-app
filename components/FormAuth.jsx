@@ -16,7 +16,10 @@ const FormAuth = ({ type }) => {
       </h1>
 
       <div className="flex w-full flex-col">
-        <input className="rounded-lg px-4 py-2  outline-none" placeholder="Email" />
+        <input
+          className="rounded-lg px-4 py-2  outline-none"
+          placeholder="Email"
+        />
       </div>
 
       <div className="flex w-full flex-col">

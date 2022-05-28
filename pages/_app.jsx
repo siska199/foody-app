@@ -20,8 +20,8 @@ export default function MyApp({
     }, 1000)
   })
   return (
-    <SessionProvider session={session}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <SessionProvider session={session}>
         {Component.auth ? (
           <Auth>
             {loading ? <LoadingPage /> : <Component {...pageProps} />}
@@ -29,8 +29,8 @@ export default function MyApp({
         ) : (
           <>{loading ? <LoadingPage /> : <Component {...pageProps} />}</>
         )}
-      </Provider>
-    </SessionProvider>
+      </SessionProvider>
+    </Provider>
   )
 }
 

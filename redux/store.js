@@ -5,6 +5,10 @@ import authReducer from './features/authSlice'
 
 const store = configureStore({
   reducer: { theme: themeReducer, carts: cartsReducer, auth: authReducer },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })
 
 export default store
