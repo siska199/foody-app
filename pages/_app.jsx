@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import { useEffect, useState } from 'react'
 import { SessionProvider, useSession, signIn } from 'next-auth/react'
 import { Provider } from 'react-redux'
+import PageNotFound from '../components/PageNotFound'
 import LoadingPage from '../components/LoadingPage'
 import Router from 'next/router'
 import store from '../redux/store'
@@ -23,7 +24,7 @@ export default function MyApp({
     <Provider store={store}>
       <SessionProvider session={session}>
         {Component.auth ? (
-          <Auth>
+          <Auth role={Component.auth.role}>
             {loading ? <LoadingPage /> : <Component {...pageProps} />}
           </Auth>
         ) : (
@@ -34,16 +35,19 @@ export default function MyApp({
   )
 }
 
-function Auth({ children }) {
+function Auth({ children, role }) {
   const { data: session, status } = useSession({ required: true })
   const isUser = !!session?.user
+  const typeUser = session?.user.role
   useEffect(() => {
     if (status === 'loading') return
     if (!isUser) signIn()
   }, [isUser, status])
 
-  if (isUser) {
+  if (isUser && role == typeUser) {
     return children
+  }else{
+    <PageNotFound/>
   }
-  return <LoadingPage />
+  return  <LoadingPage />
 }

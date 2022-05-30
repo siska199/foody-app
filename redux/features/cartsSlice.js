@@ -1,4 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { getDocs, collection, doc, addDoc } from 'firebase/firestore'
+import { db } from '../../firebase.config'
+
 
 const initialState = {
   value: {
@@ -59,7 +62,11 @@ const cartsSlice = createSlice({
       state.value.totalPrice = 0
     },
   },
+  extraReducers:{
+
+  }
 })
+
 
 export const { showCarts, addToCarts, removeFromCarts, deleteAllCharts } =
   cartsSlice.actions

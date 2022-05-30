@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getDocs, collection, doc, addDoc } from 'firebase/firestore'
-import { db } from '../../firebase.config'
+
 
 const signUpUser = createAsyncThunk('auth/signUpUser', async (session) => {
 

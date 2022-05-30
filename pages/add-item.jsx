@@ -1,39 +1,56 @@
-import React, { useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { IoFastFoodOutline } from 'react-icons/io5'
 import { BsCloudUploadFill } from 'react-icons/bs'
 import { IoBody } from 'react-icons/io5'
 import { BiDollar } from 'react-icons/bi'
 import { IoCloseOutline } from 'react-icons/io5'
-import { v4 as uuidv4 } from 'uuid'
 import { motion } from 'framer-motion'
 import Layout from '../Layout/Layout'
+import LoadingPage from '../components/LoadingPage'
+import {
+  addProduct,
+  addCategory,
+  getCategories,
+} from '../redux/features/productsSlice'
 
-const additem = () => {
-  //***Canstanta***\\
-  const dataCategories = [...Array(7)].map((_, i) => ({
-    id: uuidv4(),
-    title: 'Category' + i,
-  }))
+const Additem = () => {
+  const dispatch = useDispatch()
+
   const theme = useSelector((state) => state.theme.value)
+  const categories = useSelector((state) => state.products.value.categories)
+  const [category, setCategory] = useState('')
+
+  const [render, setRender] = useState(false)
   const imageRef = useRef(null)
   const [imageUrl, setImageUrl] = useState(null)
-  const [form, setForm] = useState({
+  const initialValueForm = {
+    idCategory: '',
     title: '',
     category: '',
     photo: '',
     calories: '',
     price: '',
-  })
-  const [category, setCategory] = useState('')
+  }
+  const [form, setForm] = useState(initialValueForm)
 
   //***Handler***\\
   const handleOnChange = (e) => {
     const inputName = e.target.name
+
     setForm({
       ...form,
       [inputName]: inputName == 'photo' ? e.target.files[0] : e.target.value,
     })
+    if (inputName == 'category') {
+      const id =
+        e.target.childNodes[e.target.selectedIndex].getAttribute('data-id')
+      setForm({
+        ...form,
+        idCategory: id,
+        [inputName]: e.target.value,
+      })
+    }
     if (inputName == 'photo' && e.target.files[0]) {
       const reader = new FileReader()
       reader.readAsDataURL(e.target.files[0])
@@ -42,6 +59,7 @@ const additem = () => {
       }
     }
   }
+
   const handleCloseImage = () => {
     setImageUrl(null)
     setForm({
@@ -49,16 +67,28 @@ const additem = () => {
       photo: '',
     })
   }
+
   const handleSubmitForm = (e) => {
     e.preventDefault()
-    console.log('form: ', form)
+    dispatch(addProduct(form))
+    setForm(initialValueForm)
+    setImageUrl(null)
   }
+
   const handleAddcategory = (e) => {
     e.preventDefault()
+    dispatch(addCategory(category))
+    setCategory('')
+    setRender(!render)
   }
+  //InitialState
+  useEffect(() => {
+    dispatch(getCategories())
+  }, [render])
+
   return (
     <Layout>
-      <div className="container flex min-h-[100vh] items-center mt-[2rem] pt-[3rem] md:pt-0 justify-center ">
+      <div className="container mt-[2rem] flex min-h-[100vh] items-center justify-center pt-[3rem] md:pt-0 ">
         <form
           className={`flex w-[50rem] flex-col gap-4 rounded-lg border-[0.17rem] p-4 ${
             theme.theme == 'light' ? 'bg-transparent' : 'bg-white'
@@ -71,22 +101,29 @@ const additem = () => {
               placeholder="Tittle"
               name="title"
               onChange={(e) => handleOnChange(e)}
+              value={form.title}
               className="w-full bg-transparent px-5 py-2 outline-none placeholder:text-gray-800"
             />
           </div>
-          <div className="flex gap-3 justify-between">
-            <div className='flex  h-[3rem] md:w-1/2'>
+          <div className="flex justify-between gap-3">
+            <div className="flex h-[3rem] md:w-1/2">
               <select
                 name="category"
                 className="w-full rounded-lg border-2 p-2 outline-none"
                 onChange={(e) => handleOnChange(e)}
                 value={form.category}
+                defaultValue={'default'}
               >
-                {dataCategories.map((data) => (
-                  <option key={data.id} value={`${data.title}`}>
-                    {data.title}
-                  </option>
-                ))}
+                <option value={'default'} hidden>
+                  Select category
+                </option>
+
+                {categories.length > 0 &&
+                  categories.map((data, i) => (
+                    <option key={i} value={`${data.name}`} data-id={data.id}>
+                      {data.name}
+                    </option>
+                  ))}
               </select>
             </div>
             <div className="flex flex-wrap gap-2 md:w-1/2">
@@ -97,6 +134,7 @@ const additem = () => {
                 name=""
                 id=""
                 onChange={(e) => setCategory(e.target.value)}
+                value={category}
               />
               <motion.button
                 whileTap={{ scale: 0.75 }}
@@ -143,6 +181,7 @@ const additem = () => {
                 placeholder="Calories"
                 name="calories"
                 onChange={(e) => handleOnChange(e)}
+                value={form.calories}
                 className="w-full bg-transparent px-5 py-2 outline-none placeholder:text-gray-800"
               />
             </div>
@@ -152,6 +191,7 @@ const additem = () => {
                 type="text"
                 placeholder="Price"
                 name="price"
+                value={form.price}
                 onChange={(e) => handleOnChange(e)}
                 className="w-full bg-transparent px-5 py-2 outline-none placeholder:text-gray-600"
               />
@@ -171,5 +211,10 @@ const additem = () => {
     </Layout>
   )
 }
+Additem.auth = {
+  role: 'user',
+  loading: <LoadingPage />,
+  unauthorized: '/',
+}
 
-export default additem
+export default Additem

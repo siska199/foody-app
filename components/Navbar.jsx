@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react'
 import { showHideModalAuth } from '../redux/features/authSlice'
 import DropdownMenu from '../components/DropdownMenu'
 const Navbar = ({ home }) => {
+  
   const [shadow, setShadow] = useState('')
   const [showMenu, setShowMenu] = useState(false)
   const { data: session } = useSession()
