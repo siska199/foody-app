@@ -16,8 +16,8 @@ const initialState = {
     categories: [],
     fruits: [],
     loading: false,
-    firstProduct: null,
-    lastProduct: null,
+    firstVisibleProduct: null,
+    lastVisibleProduct: null,
   },
 }
 
@@ -70,18 +70,18 @@ const getSpecifiedProducts = createAsyncThunk(
 
 const getPrevNext = createAsyncThunk(
   'products/getPrevNext',
-  async ({ idCategory, fruits, next }) => {
+  async ({ idCategory, fruits, next, product }) => {
     console.log('fruits state: ', fruits)
     console.log('id Category: ', idCategory)
 
     const nextQuery = query(
       collection(db, 'categories', idCategory, 'products'),
-      startAfter(lastVisible),
+      startAfter(product),
       limit(5)
     )
     const prevQuery = query(
       collection(db, 'categories', idCategory, 'products'),
-      startAfter(lastVisible),
+      startAfter(product),
       limit(5)
     )
     const resProducts = await getDocs(next ? nextQuery : prevQuery)
@@ -89,6 +89,7 @@ const getPrevNext = createAsyncThunk(
     const firstVisible = resProducts.docs[0]
     const products = []
     resProducts.forEach((doc) => {
+      console.log('nextPre products: ', doc.data())
       products.push({
         id: doc.id,
         title: doc.data().title,
@@ -164,16 +165,31 @@ const productsSlice = createSlice({
     },
     [getSpecifiedProducts.fulfilled]: (state, { payload }) => {
       console.log('payload products specified: ', payload)
+      state.value.products = payload.data
+      state.value.firstVisibleProduct = payload.firstVisible
+      state.value.lastVisibleProduct = payload.lastVisible
+
       if (payload.fruits) {
         state.value.fruits = payload.data
-        state.value.products = payload.data
-      } else {
-        state.value.products = payload.data
       }
     },
     [getSpecifiedProducts.rejected]: (state, { payload }) => {
       state.value.loading = false
       console.log('get products rejected')
+    },
+    [getPrevNext.pending]: (state, { payload }) => {
+      state.value.loading = true
+    },
+    [getPrevNext.fulfilled]: (state, { payload }) => {
+      state.value.loading = false
+      console.log('payload products specified: ', payload)
+      state.value.products = payload.data
+      state.value.firstVisibleProduct = payload.firstVisible
+      state.value.lastVisibleProduct = payload.lastVisible
+
+      if (payload.fruits) {
+        state.value.fruits = payload.data
+      }
     },
   },
 })

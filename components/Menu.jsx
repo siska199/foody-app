@@ -7,6 +7,7 @@ import { GrNext } from 'react-icons/gr'
 import {
   getSpecifiedProducts,
   getCategories,
+  getPrevNext,
 } from '../redux/features/productsSlice'
 import { motion } from 'framer-motion'
 
@@ -17,6 +18,14 @@ const Menu = () => {
   const categories = useSelector((state) => state.products.value.categories)
   const products = useSelector((state) => state.products.value.products)
   const fruits = useSelector((state) => state.products.value.fruits)
+  const firstVisibleProduct = useSelector(
+    (state) => state.products.value.firstVisibleProduct
+  )
+  const lastVisibleProduct = useSelector(
+    (state) => state.products.value.lastVisibleProduct
+  )
+  console.log('first: ', firstVisibleProduct)
+  console.log('last: ', lastVisibleProduct)
 
   useEffect(() => {
     dispatch(getCategories())
@@ -29,6 +38,11 @@ const Menu = () => {
     dispatch(getSpecifiedProducts({ idCategory: category.id, fruits: false }))
   }, [category])
 
+  //Handler:
+  const handleNextPrev = (next,fruits) => {
+    const product = next? firstVisibleProduct: lastVisibleProduct
+    dispatch(getPrevNext({ idCategory: category.id, fruits,next,product}))
+  }
   return (
     <section id="menu" className="container pt-[4rem] md:pt-[7rem]">
       <div className="relative flex w-full flex-col">
@@ -36,15 +50,17 @@ const Menu = () => {
         <div className="absolute top-0 right-0 flex space-x-2">
           <motion.button
             whileTap={{ scale: 0.75 }}
+            onClick={() => handleNextPrev(false,true)}
             className={`${theme.primaryCard} rounded-md p-2 `}
           >
-            <GrPrevious color="white"/>
+            <GrPrevious color="white" />
           </motion.button>
           <motion.button
             whileTap={{ scale: 0.75 }}
+            onClick={() => handleNextPrev(true,true)}
             className={`${theme.primaryCard} rounded-md p-2 `}
           >
-            <GrNext color="white"/>
+            <GrNext color="white" />
           </motion.button>
         </div>
         <div className="my-[3rem] flex w-full flex-wrap justify-center gap-3 md:my-[7rem] md:flex-nowrap md:justify-between">
@@ -68,6 +84,7 @@ const Menu = () => {
         <div className="mt-[3rem] flex items-start justify-between md:mx-[7rem] md:mt-[7rem]">
           <motion.button
             whileTap={{ scale: 0.75 }}
+            onClick={() => handleNextPrev(false)}
             className={`${theme.primaryCard} rounded-md px-2 text-white`}
           >
             Prev
@@ -81,6 +98,7 @@ const Menu = () => {
           </div>
           <motion.button
             whileTap={{ scale: 0.75 }}
+            onClick={() => handleNextPrev(false)}
             className={`${theme.primaryCard} rounded-md px-2 text-white`}
           >
             Next
