@@ -18,11 +18,17 @@ const Menu = () => {
   const categories = useSelector((state) => state.products.value.categories)
   const products = useSelector((state) => state.products.value.products)
   const fruits = useSelector((state) => state.products.value.fruits)
-  const prev = useSelector((state) => state.products.value.prevState)
-  const next = useSelector((state) => state.products.value.nextState)
-  console.log('prev :', prev)
-  console.log('next: ', next)
+  const prevState = useSelector((state) => state.products.value.prevState)
+  const nextState = useSelector((state) => state.products.value.nextState)
 
+  const prevFruits = useSelector(
+    (state) => state.products.value.prevStateFruits
+  )
+  const nextFruits = useSelector(
+    (state) => state.products.value.nextStateFruits
+  )
+  console.log('prev we get: ', prevFruits)
+  console.log('next we get: ', nextFruits)
   const firstVisibleProduct = useSelector(
     (state) => state.products.value.firstVisibleProduct
   )
@@ -50,40 +56,46 @@ const Menu = () => {
   }
 
   return (
-    <section id="menu" className="container pt-[4rem] md:pt-[7rem]">
+    <section
+      id="menu"
+      className="container flex flex-col  pt-[4rem] md:pt-[7rem]"
+    >
       <div className="relative flex w-full flex-col">
         <MenuTitle theme={theme} title={'Our Fresh & Healthy Fruits'} />
         <div className="absolute top-0 right-0 flex space-x-2">
-          {prev && (
+          {prevFruits && (
             <motion.button
               whileTap={{ scale: 0.75 }}
               onClick={() => handleNextPrev(false, true)}
               className={`${theme.primaryCard} rounded-md p-2 `}
             >
-              <BsFillArrowLeftCircleFill size="20px" color="white" />
+              <BsFillArrowRightCircleFill size="20px" color="white" />
             </motion.button>
           )}
-          {next && (
+          {nextFruits && (
             <motion.button
               whileTap={{ scale: 0.75 }}
               onClick={() => handleNextPrev(true, true)}
               className={`${theme.primaryCard} rounded-md p-2 `}
             >
-              <BsFillArrowRightCircleFill size="20px" color="white" />
+              <BsFillArrowLeftCircleFill size="20px" color="white" />
             </motion.button>
           )}
         </div>
-        <div className="my-[3rem] flex w-full flex-wrap justify-center gap-3 md:my-[7rem] md:flex-nowrap md:justify-start md:gap-[3rem]">
+        <div className="my-[3rem] flex w-full flex-wrap justify-center gap-3 md:my-[7rem] md:flex-nowrap md:justify-start md:gap-[2.5rem]">
           {fruits.map((data, i) => (
-            <div  className={`md:mb-[3rem] ${i==5&&"!hidden"}`}>
-              <CardFood key={data.id} data={data} />
+            <div
+              key={data.id}
+              className={`md:mb-[3rem] ${i == 5 && '!hidden'}`}
+            >
+              <CardFood data={data} />
             </div>
           ))}
         </div>
       </div>
-      <div className="min-h-[100vh]">
+      <div className="flex min-h-[100vh] w-full flex-col">
         <MenuTitle theme={theme} title={'Our Hot Dishes'} />
-        <div className="my-8 flex w-full flex-wrap justify-center gap-2 md:my-10 md:gap-4 ">
+        <div className="my-8 flex w-full  flex-wrap justify-center gap-2 md:my-10 md:gap-4 ">
           {categories.map((data, i) => (
             <CardCategory
               setCategory={setCategory}
@@ -93,17 +105,17 @@ const Menu = () => {
             />
           ))}
         </div>
-        <div className="mt-[3rem] flex items-start justify-between md:mx-[5rem] md:mt-[7rem]">
-          {prev && (
+        <div className="mt-[3rem] flex items-start  justify-center md:mt-[7rem]">
+          {prevState && (
             <motion.button
               whileTap={{ scale: 0.75 }}
               onClick={() => handleNextPrev(false, false)}
-              className={`${theme.primaryCard} rounded-md px-2 text-white`}
+              className={`${theme.primaryCard} mr-auto rounded-md px-2 text-white`}
             >
               Prev
             </motion.button>
           )}
-          <div className=" flex flex-wrap justify-center gap-4 ">
+          <div className=" m-auto flex w-[80%] flex-wrap justify-center gap-4 justify-self-center">
             {products.map((data, i) => (
               <div
                 key={data.id}
@@ -113,11 +125,11 @@ const Menu = () => {
               </div>
             ))}
           </div>
-          {next && (
+          {nextState && (
             <motion.button
               whileTap={{ scale: 0.75 }}
               onClick={() => handleNextPrev(true, false)}
-              className={`${theme.primaryCard} rounded-md px-2 text-white`}
+              className={`${theme.primaryCard} ml-auto rounded-md px-2 text-white`}
             >
               Next
             </motion.button>

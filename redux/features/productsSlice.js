@@ -6,8 +6,8 @@ import {
   getDocs,
   limit,
   query,
-  startAfter,
-  endBefore,
+  startAt,
+  endAt,
 } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { capitalixeFirstLetter } from '../../helper/function'
@@ -21,6 +21,8 @@ const initialState = {
     lastVisibleProduct: null,
     prevState: false,
     nextState: true,
+    prevStateFruits: false,
+    nextStateFruits: true,
   },
 }
 
@@ -45,7 +47,7 @@ const getSpecifiedProducts = createAsyncThunk(
     const resProducts = await getDocs(
       query(collection(db, 'categories', idCategory, 'products'), limit(6))
     )
-    const lastVisible = resProducts.docs[resProducts.docs.length - 2]
+    const lastVisible = resProducts.docs[resProducts.docs.length - 1]
     const firstVisible = resProducts.docs[0]
 
     const products = []
@@ -59,8 +61,9 @@ const getSpecifiedProducts = createAsyncThunk(
         price: doc.data().price,
       })
     })
-    const nextState = products.length-1 > 5 ? true : false
-    const prevState = products.length-1 <= 5 ? true : false
+    const nextState = products.length > 5 ? true : false
+    const prevState = false
+
     return {
       data: products,
       fruits,
@@ -77,18 +80,27 @@ const getPrevNext = createAsyncThunk(
   async ({ idCategory, fruits, next, product }) => {
     const nextQuery = query(
       collection(db, 'categories', idCategory, 'products'),
-      startAfter(product),
+      startAt(product),
       limit(6)
     )
+
     const prevQuery = query(
       collection(db, 'categories', idCategory, 'products'),
-      endBefore(product),
+      endAt(product),
       limit(6)
     )
-    const resProducts = await getDocs(next ? nextQuery : prevQuery)
-    const lastVisible = resProducts.docs[resProducts.docs.length - 2]
+    let resProducts = []
+    if (next) {
+      resProducts = await getDocs(nextQuery)
+    } else {
+      console.log("product end: ", product.data())
+      resProducts = await getDocs(prevQuery)
+      console.log("prevProducts: ", resProducts)
+    }
+    const lastVisible = resProducts.docs[resProducts.docs.length - 1]
     const firstVisible = resProducts.docs[0]
     const products = []
+
     resProducts.forEach((doc) => {
       products.push({
         id: doc.id,
@@ -99,10 +111,12 @@ const getPrevNext = createAsyncThunk(
         price: doc.data().price,
       })
     })
+
+    const prevState = products.length <= 5 || next ? true : false
     const nextState = products.length > 5 ? true : false
-    const prevState = products.length-1 <=5  ? true : false
-    console.log("prev", prevState)
-    console.log("next", nextState)
+
+    console.log('prev reducer', prevState)
+    console.log('next reducer', nextState)
 
     return {
       data: products,
@@ -174,7 +188,8 @@ const productsSlice = createSlice({
       state.value.products = payload.data
       state.value.firstVisibleProduct = payload.firstVisible
       state.value.lastVisibleProduct = payload.lastVisible
-
+      state.value.nextState = payload.nextState
+      state.value.prevState = payload.prevState
       if (payload.fruits) {
         state.value.fruits = payload.data
       }
@@ -187,7 +202,7 @@ const productsSlice = createSlice({
       state.value.loading = true
     },
     [getPrevNext.fulfilled]: (state, { payload }) => {
-      console.log("payload", payload)
+      console.log('payload prevnext', payload)
       state.value.loading = false
       state.value.products = payload.data
       state.value.firstVisibleProduct = payload.firstVisible
