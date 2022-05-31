@@ -1,40 +1,54 @@
-import React from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import React, { useEffect, useState } from 'react'
 import CardFood from './CardFood'
 import CardCategory from './CardCategory'
-import { IoFastFood } from 'react-icons/io5'
-import { useSelector } from 'react-redux'
-const Menu = () => {
-  const dataFruites = [...Array(5)].map((_, i) => ({
-    id: uuidv4(),
-    imageUrl: '/assets/f1.png',
-    title: 'Blue Berries',
-    desc: '80 Calories',
-    price: 12,
-  }))
-  const dataHotDishes = [...Array(5)].map((_, i) => ({
-    id: uuidv4(),
-    imageUrl: '/assets/f1.png',
-    title: 'Blue Berries',
-    desc: '80 Calories',
-    price: 12,
-  }))
+import { useDispatch, useSelector } from 'react-redux'
+import { GrPrevious } from 'react-icons/gr'
+import { GrNext } from 'react-icons/gr'
+import {
+  getSpecifiedProducts,
+  getCategories,
+} from '../redux/features/productsSlice'
+import { motion } from 'framer-motion'
 
-  const dataIcon = [...Array(7)].map((_, i) => ({
-    id: uuidv4(),
-    title: 'Category',
-    icon: (
-      <IoFastFood className="text-[1.3rem] text-white group-hover:text-text-light" />
-    ),
-  }))
+const Menu = () => {
+  const dispatch = useDispatch()
+  const [category, setCategory] = useState({ id: '1ZSgjN0kHvkDN3gCvzHL' })
   const theme = useSelector((state) => state.theme.value)
+  const categories = useSelector((state) => state.products.value.categories)
+  const products = useSelector((state) => state.products.value.products)
+  const fruits = useSelector((state) => state.products.value.fruits)
+
+  useEffect(() => {
+    dispatch(getCategories())
+    dispatch(
+      getSpecifiedProducts({ idCategory: '1ZSgjN0kHvkDN3gCvzHL', fruits: true })
+    )
+  }, [])
+
+  useEffect(() => {
+    dispatch(getSpecifiedProducts({ idCategory: category.id, fruits: false }))
+  }, [category])
 
   return (
     <section id="menu" className="container pt-[4rem] md:pt-[7rem]">
-      <div className="flex w-full flex-col  ">
+      <div className="relative flex w-full flex-col">
         <MenuTitle theme={theme} title={'Our Fresh & Healthy Fruits'} />
+        <div className="absolute top-0 right-0 flex space-x-2">
+          <motion.button
+            whileTap={{ scale: 0.75 }}
+            className={`${theme.primaryCard} rounded-md p-2 `}
+          >
+            <GrPrevious color="white"/>
+          </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.75 }}
+            className={`${theme.primaryCard} rounded-md p-2 `}
+          >
+            <GrNext color="white"/>
+          </motion.button>
+        </div>
         <div className="my-[3rem] flex w-full flex-wrap justify-center gap-3 md:my-[7rem] md:flex-nowrap md:justify-between">
-          {dataFruites.map((data, i) => (
+          {fruits.map((data, i) => (
             <CardFood key={data.id} data={data} />
           ))}
         </div>
@@ -42,16 +56,35 @@ const Menu = () => {
       <div>
         <MenuTitle theme={theme} title={'Our Hot Dishes'} />
         <div className="my-8 flex w-full flex-wrap justify-center gap-2 md:my-10 md:gap-4 ">
-          {dataIcon.map((data, i) => (
-            <CardCategory data={data} key={data.id} />
+          {categories.map((data, i) => (
+            <CardCategory
+              setCategory={setCategory}
+              idCategory={category.id}
+              data={data}
+              key={data.id}
+            />
           ))}
         </div>
-        <div className="mt-[3rem] flex flex-wrap justify-center gap-3 md:mx-[7rem] md:mt-[7rem]">
-          {dataHotDishes.map((data, i) => (
-            <div key={data.id} className="md:mb-[3rem]">
-              <CardFood data={data} />
-            </div>
-          ))}
+        <div className="mt-[3rem] flex items-start justify-between md:mx-[7rem] md:mt-[7rem]">
+          <motion.button
+            whileTap={{ scale: 0.75 }}
+            className={`${theme.primaryCard} rounded-md px-2 text-white`}
+          >
+            Prev
+          </motion.button>
+          <div className=" flex flex-wrap justify-center gap-3 ">
+            {products.map((data, i) => (
+              <div key={data.id} className="md:mb-[3rem]">
+                <CardFood data={data} />
+              </div>
+            ))}
+          </div>
+          <motion.button
+            whileTap={{ scale: 0.75 }}
+            className={`${theme.primaryCard} rounded-md px-2 text-white`}
+          >
+            Next
+          </motion.button>
         </div>
       </div>
     </section>

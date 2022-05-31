@@ -8,25 +8,25 @@ const Home = () => {
       name: 'Icecream',
       desc: 'Chocolate & vanilla',
       price: '5.25',
-      imageSrc: '/assets/i1.png',
+      imageSrc: '/assets/i1.webp',
     },
     {
       name: 'Strawberries',
       desc: 'Fresh Strawberries',
       price: '10.25',
-      imageSrc: '/assets/f1.png',
+      imageSrc: '/assets/f1.webp',
     },
     {
       name: 'Chicken Kebab',
       desc: 'Mixed Kebab Plate',
       price: '8.25',
-      imageSrc: '/assets/c3.png',
+      imageSrc: '/assets/c3.webp',
     },
     {
       name: 'Fish Kebab',
       desc: 'Mixed Fish Kebab',
       price: '5.25',
-      imageSrc: '/assets/fi1.png',
+      imageSrc: '/assets/fi1.webp',
     },
   ]
   const theme = useSelector((state) => state.theme.value)
@@ -87,7 +87,7 @@ const Home = () => {
         </div>
         {/* BG hero */}
         <img
-          src="/assets/heroBg.png"
+          src="/assets/heroBg.webp"
           className="w-[100%] md:w-[80%] lg:w-[60%]"
         />
       </div>

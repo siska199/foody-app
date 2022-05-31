@@ -3,6 +3,7 @@ import { MdShoppingBasket } from 'react-icons/md'
 import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCarts } from '../redux/features/cartsSlice'
+
 const CardFood = ({ data }) => {
   const theme = useSelector((state) => state.theme.value)
   const disptach = useDispatch()
@@ -10,18 +11,19 @@ const CardFood = ({ data }) => {
   const handleAddToCart = () => {
     disptach(addToCarts(data))
   }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 1 }}
+      transition={{ delay: 0.5 }}
       className={`flex flex-col items-center justify-between gap-2 md:w-[15rem] ${theme.cardColor} p-3 backdrop-blur-sm hover:${theme.cardColor} mb-5 hover:shadow-lg md:mb-0`}
     >
       <div className="relative flex w-full justify-end ">
         <motion.img
-          src={data.imageUrl}
+          src={data.photo}
           whileHover={{ scale: 1.2 }}
-          className="absolute left-0 -mt-[2.5rem] w-[5rem] object-contain md:-mt-[4rem] md:w-[8rem]"
+          className="absolute left-0 -mt-[2.7rem] w-[5rem]  object-contain md:-mt-[4rem] md:w-[8rem]"
           alt=""
         />
         <motion.div
@@ -51,7 +53,7 @@ const CardFood = ({ data }) => {
               theme.theme == 'light' ? 'text-gray-500' : '!font-thin text-white'
             } `}
           >
-            {data.desc}
+            {data.calories} {` `} calories
           </p>
           <h5
             className={`text-lg font-semibold ${

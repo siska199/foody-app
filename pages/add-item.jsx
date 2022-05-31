@@ -18,6 +18,7 @@ const Additem = () => {
   const dispatch = useDispatch()
 
   const theme = useSelector((state) => state.theme.value)
+  const loading = useSelector((state) => state.products.value.loading)
   const categories = useSelector((state) => state.products.value.categories)
   const [category, setCategory] = useState('')
 
@@ -27,7 +28,7 @@ const Additem = () => {
   const initialValueForm = {
     idCategory: '',
     title: '',
-    category: '',
+    category: 'default',
     photo: '',
     calories: '',
     price: '',
@@ -84,7 +85,7 @@ const Additem = () => {
   //InitialState
   useEffect(() => {
     dispatch(getCategories())
-  }, [render])
+  }, [render, dispatch])
 
   return (
     <Layout>
@@ -112,9 +113,8 @@ const Additem = () => {
                 className="w-full rounded-lg border-2 p-2 outline-none"
                 onChange={(e) => handleOnChange(e)}
                 value={form.category}
-                defaultValue={'default'}
               >
-                <option value={'default'} hidden>
+                <option value={'default'} disabled>
                   Select category
                 </option>
 

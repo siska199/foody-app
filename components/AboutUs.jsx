@@ -12,7 +12,7 @@ const AboutUs = () => {
       <TittleSection title={'About Us'} />
       <div className="my-[5rem] flex flex-wrap items-center justify-center gap-8">
         <div>
-          <img src="/assets/i6.png" className="w-[15rem]" />
+          <img src="/assets/i6.webp" className="w-[15rem]" />
           
         </div>
         <div className="md:w-[50%]">

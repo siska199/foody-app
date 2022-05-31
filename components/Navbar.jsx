@@ -93,7 +93,7 @@ const Navbar = ({ home }) => {
                 <motion.img
                   whileTap={{ scale: 0.75 }}
                   className="w-8 cursor-pointer "
-                  src="/assets/avatar.png"
+                  src="/assets/avatar.webp"
                   onClick={() => setShowMenu(!showMenu)}
                 />
                 {showMenu && <DropdownMenu />}
