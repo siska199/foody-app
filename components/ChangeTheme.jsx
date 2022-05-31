@@ -15,11 +15,11 @@ const ChangeTheme = () => {
     },
     {
       theme: 'dark',
-      bg: 'bg-[#FF8D29]',
+      bg: 'bg-orange-600',
       textMainColor: 'text-slate-200',
       primaryText: 'text-[#414349]',
       primaryCard: 'bg-[#414349]',
-      cardColor: 'bg-red-400',
+      cardColor: 'bg-orange-400',
     },
   ]
 

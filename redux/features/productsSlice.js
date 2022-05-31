@@ -41,8 +41,6 @@ const addCategory = createAsyncThunk('products/addCategory', async (data) => {
 const getSpecifiedProducts = createAsyncThunk(
   'products/getSpecifiedProducts',
   async ({ idCategory, fruits }) => {
-    console.log('fruits state: ', fruits)
-    console.log('id Category: ', idCategory)
 
     const resProducts = await getDocs(
       query(collection(db, 'categories', idCategory, 'products'), limit(5))
@@ -73,9 +71,6 @@ const getSpecifiedProducts = createAsyncThunk(
 const getPrevNext = createAsyncThunk(
   'products/getPrevNext',
   async ({ idCategory, fruits, next, product }) => {
-    console.log('product: ', product)
-    console.log("next:",next)
-    console.log('id Category: ', idCategory)
 
     const nextQuery = query(
       collection(db, 'categories', idCategory, 'products'),
@@ -88,12 +83,10 @@ const getPrevNext = createAsyncThunk(
       limit(5)
     )
     const resProducts = await getDocs(next ? nextQuery : prevQuery)
-    console.log("result: ",resProducts)
     const lastVisible = resProducts.docs[resProducts.docs.length - 1]
     const firstVisible = resProducts.docs[0]
     const products = []
     resProducts.forEach((doc) => {
-      console.log('nextPre products: ', doc.data())
       products.push({
         id: doc.id,
         title: doc.data().title,

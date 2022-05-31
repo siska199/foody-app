@@ -69,7 +69,7 @@ const Menu = () => {
           ))}
         </div>
       </div>
-      <div>
+      <div className='min-h-[100vh]'>
         <MenuTitle theme={theme} title={'Our Hot Dishes'} />
         <div className="my-8 flex w-full flex-wrap justify-center gap-2 md:my-10 md:gap-4 ">
           {categories.map((data, i) => (

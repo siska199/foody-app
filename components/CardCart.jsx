@@ -12,7 +12,7 @@ const CardCart = ({ data, shipping }) => {
   return (
     <div className="flex w-full justify-between rounded-lg bg-white py-2 px-3 text-black backdrop-blur-sm">
       <div className="flex items-center gap-3">
-        <img src={data.imageUrl} className="w-16" />
+        <img src={data.photo} className="w-16" />
         <div className="font-[300]">
           <h1>{data.title}</h1>
           <p className="text-sm ">$ {data.price}</p>
