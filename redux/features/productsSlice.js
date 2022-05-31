@@ -7,6 +7,8 @@ import {
   limit,
   query,
   startAfter,
+  endBefore,
+
 } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { capitalixeFirstLetter } from '../../helper/function'
@@ -71,7 +73,8 @@ const getSpecifiedProducts = createAsyncThunk(
 const getPrevNext = createAsyncThunk(
   'products/getPrevNext',
   async ({ idCategory, fruits, next, product }) => {
-    console.log('fruits state: ', fruits)
+    console.log('product: ', product)
+    console.log("next:",next)
     console.log('id Category: ', idCategory)
 
     const nextQuery = query(
@@ -81,10 +84,11 @@ const getPrevNext = createAsyncThunk(
     )
     const prevQuery = query(
       collection(db, 'categories', idCategory, 'products'),
-      startAfter(product),
+      endBefore(product),
       limit(5)
     )
     const resProducts = await getDocs(next ? nextQuery : prevQuery)
+    console.log("result: ",resProducts)
     const lastVisible = resProducts.docs[resProducts.docs.length - 1]
     const firstVisible = resProducts.docs[0]
     const products = []
@@ -164,7 +168,6 @@ const productsSlice = createSlice({
       console.log('get products pending')
     },
     [getSpecifiedProducts.fulfilled]: (state, { payload }) => {
-      console.log('payload products specified: ', payload)
       state.value.products = payload.data
       state.value.firstVisibleProduct = payload.firstVisible
       state.value.lastVisibleProduct = payload.lastVisible
@@ -182,7 +185,6 @@ const productsSlice = createSlice({
     },
     [getPrevNext.fulfilled]: (state, { payload }) => {
       state.value.loading = false
-      console.log('payload products specified: ', payload)
       state.value.products = payload.data
       state.value.firstVisibleProduct = payload.firstVisible
       state.value.lastVisibleProduct = payload.lastVisible

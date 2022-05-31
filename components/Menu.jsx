@@ -39,9 +39,9 @@ const Menu = () => {
   }, [category])
 
   //Handler:
-  const handleNextPrev = (next,fruits) => {
-    const product = next? firstVisibleProduct: lastVisibleProduct
-    dispatch(getPrevNext({ idCategory: category.id, fruits,next,product}))
+  const handleNextPrev = (next, fruits) => {
+    const product = next ? lastVisibleProduct : firstVisibleProduct
+    dispatch(getPrevNext({ idCategory: category.id, fruits, next, product }))
   }
   return (
     <section id="menu" className="container pt-[4rem] md:pt-[7rem]">
@@ -50,14 +50,14 @@ const Menu = () => {
         <div className="absolute top-0 right-0 flex space-x-2">
           <motion.button
             whileTap={{ scale: 0.75 }}
-            onClick={() => handleNextPrev(false,true)}
+            onClick={() => handleNextPrev(false, true)}
             className={`${theme.primaryCard} rounded-md p-2 `}
           >
             <GrPrevious color="white" />
           </motion.button>
           <motion.button
             whileTap={{ scale: 0.75 }}
-            onClick={() => handleNextPrev(true,true)}
+            onClick={() => handleNextPrev(true, true)}
             className={`${theme.primaryCard} rounded-md p-2 `}
           >
             <GrNext color="white" />
@@ -84,7 +84,7 @@ const Menu = () => {
         <div className="mt-[3rem] flex items-start justify-between md:mx-[7rem] md:mt-[7rem]">
           <motion.button
             whileTap={{ scale: 0.75 }}
-            onClick={() => handleNextPrev(false)}
+            onClick={() => handleNextPrev(false,false)}
             className={`${theme.primaryCard} rounded-md px-2 text-white`}
           >
             Prev
@@ -98,7 +98,7 @@ const Menu = () => {
           </div>
           <motion.button
             whileTap={{ scale: 0.75 }}
-            onClick={() => handleNextPrev(false)}
+            onClick={() => handleNextPrev(true,false)}
             className={`${theme.primaryCard} rounded-md px-2 text-white`}
           >
             Next
