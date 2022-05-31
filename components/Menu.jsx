@@ -27,16 +27,13 @@ const Menu = () => {
   const nextFruits = useSelector(
     (state) => state.products.value.nextStateFruits
   )
-  console.log('prev we get: ', prevFruits)
-  console.log('next we get: ', nextFruits)
+
   const firstVisibleProduct = useSelector(
     (state) => state.products.value.firstVisibleProduct
   )
   const lastVisibleProduct = useSelector(
     (state) => state.products.value.lastVisibleProduct
   )
-  console.log('first: ', firstVisibleProduct)
-  console.log('last: ', lastVisibleProduct)
 
   useEffect(() => {
     dispatch(getCategories())

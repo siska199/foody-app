@@ -8,6 +8,9 @@ import {
   query,
   startAt,
   endAt,
+  limitToLast,
+  serverTimestamp,
+  orderBy,
 } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { capitalixeFirstLetter } from '../../helper/function'
@@ -30,7 +33,11 @@ const getCategories = createAsyncThunk('products/getCategories', async () => {
   const categories = []
   const data = await getDocs(collection(db, 'categories'))
   data.forEach((doc) => {
-    categories.push({ id: doc.id, name: doc.data().name })
+    categories.push({
+      id: doc.id,
+      name: doc.data().name,
+      createdAt: doc.data().createdAt,
+    })
   })
   return categories
 })
@@ -38,6 +45,7 @@ const getCategories = createAsyncThunk('products/getCategories', async () => {
 const addCategory = createAsyncThunk('products/addCategory', async (data) => {
   await addDoc(collection(db, 'categories'), {
     name: capitalixeFirstLetter(data),
+    createdAt: serverTimestamp(),
   })
 })
 
@@ -45,7 +53,11 @@ const getSpecifiedProducts = createAsyncThunk(
   'products/getSpecifiedProducts',
   async ({ idCategory, fruits }) => {
     const resProducts = await getDocs(
-      query(collection(db, 'categories', idCategory, 'products'), limit(6))
+      query(
+        collection(db, 'categories', idCategory, 'products'),
+        orderBy('createdAt', 'desc'),
+        limit(6)
+      )
     )
     const lastVisible = resProducts.docs[resProducts.docs.length - 1]
     const firstVisible = resProducts.docs[0]
@@ -59,6 +71,7 @@ const getSpecifiedProducts = createAsyncThunk(
         photo: doc.data().photo,
         calories: doc.data().calories,
         price: doc.data().price,
+        createdAt: doc.data().createdAt,
       })
     })
     const nextState = products.length > 5 ? true : false
@@ -80,25 +93,21 @@ const getPrevNext = createAsyncThunk(
   async ({ idCategory, fruits, next, product }) => {
     const nextQuery = query(
       collection(db, 'categories', idCategory, 'products'),
+      orderBy('createdAt', 'desc'),
       startAt(product),
       limit(6)
     )
 
     const prevQuery = query(
       collection(db, 'categories', idCategory, 'products'),
+      orderBy('createdAt', 'desc'),
       endAt(product),
-      limit(6)
+      limitToLast(7)
     )
-    let resProducts = []
-    if (next) {
-      resProducts = await getDocs(nextQuery)
-    } else {
-      console.log("product end: ", product.data())
-      resProducts = await getDocs(prevQuery)
-      console.log("prevProducts: ", resProducts)
-    }
+    const resProducts = await getDocs(next?nextQuery:prevQuery)
+
     const lastVisible = resProducts.docs[resProducts.docs.length - 1]
-    const firstVisible = resProducts.docs[0]
+    const firstVisible = next?resProducts.docs[0]:resProducts.docs[1]
     const products = []
 
     resProducts.forEach((doc) => {
@@ -109,14 +118,12 @@ const getPrevNext = createAsyncThunk(
         photo: doc.data().photo,
         calories: doc.data().calories,
         price: doc.data().price,
+        createdAt: doc.data().createdAt,
       })
     })
 
-    const prevState = products.length <= 5 || next ? true : false
+    const prevState = products.length == 7 || next ? true : false
     const nextState = products.length > 5 ? true : false
-
-    console.log('prev reducer', prevState)
-    console.log('next reducer', nextState)
 
     return {
       data: products,
@@ -139,6 +146,7 @@ const addProduct = createAsyncThunk('products/addProduct', async (data) => {
       photo: downloadURL,
       calories: data.calories,
       price: data.price,
+      createdAt: serverTimestamp(),
     })
   })
 })

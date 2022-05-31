@@ -1,19 +1,27 @@
 
 
 1.Chicken (7) :
-Chicken Masala
-Chilly Chicken
-Chicken Tikka Masala
-Chicken Korma
-Butter Chicken
-Saag Chicken
-Chicken Vindaloo
+Chicken Balado
+Chilly Spicy 
+Chicken Mix
+Friend Chicken
+Grilled Chicken
+Potato Chicken
+
 2. Curry (6)
+Spicy Curry
+Potato Curry
+Macroni Curry
+Chicken Curry
+Gulai Curry
 Shrimp Curry 
-Kadai Chicken Curry
-Butter Chicken Curry
 
 3. Rice (5)
+Vegetable Rice
+Long Rice Chicken
+Biryani Rice
+Biryani Original
+Birany Tofu Mix
 
 4. Fish (5)
 
@@ -38,3 +46,11 @@ Ice Cup Fruites
 Strowberry Wafello
 
 7. Soft Drinks d8
+Red Bul
+Pepsi
+Monster Energy
+Ice Vanilla
+Sprite
+Fanta
+Ice Orange Jus
+Coca Cola
