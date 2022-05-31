@@ -10,35 +10,32 @@ import {
   getPrevNext,
 } from '../redux/features/productsSlice'
 import { motion } from 'framer-motion'
-
+import { idFruitsCategories } from '../helper/constanta'
 const Menu = () => {
   const dispatch = useDispatch()
-  const [category, setCategory] = useState({ id: '1ZSgjN0kHvkDN3gCvzHL' })
+  const [category, setCategory] = useState({ id: idFruitsCategories })
   const theme = useSelector((state) => state.theme.value)
   const categories = useSelector((state) => state.products.value.categories)
   const products = useSelector((state) => state.products.value.products)
   const fruits = useSelector((state) => state.products.value.fruits)
   const prevState = useSelector((state) => state.products.value.prevState)
   const nextState = useSelector((state) => state.products.value.nextState)
-
-  const prevFruits = useSelector(
-    (state) => state.products.value.prevStateFruits
-  )
-  const nextFruits = useSelector(
-    (state) => state.products.value.nextStateFruits
-  )
-
   const firstVisibleProduct = useSelector(
     (state) => state.products.value.firstVisibleProduct
   )
   const lastVisibleProduct = useSelector(
     (state) => state.products.value.lastVisibleProduct
   )
-
+  const prevFruits = useSelector(
+    (state) => state.products.value.prevStateFruits
+  )
+  const nextFruits = useSelector(
+    (state) => state.products.value.nextStateFruits
+  )
   useEffect(() => {
     dispatch(getCategories())
     dispatch(
-      getSpecifiedProducts({ idCategory: '1ZSgjN0kHvkDN3gCvzHL', fruits: true })
+      getSpecifiedProducts({ idCategory: idFruitsCategories, fruits: true })
     )
   }, [])
 

@@ -1,13 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { themeLight } from '../../helper/constanta'
 
-const initialState = {
-  theme: 'light',
-  bg: 'bg-[#f5f3f3]',
-  textMainColor: 'text-[#515151]',
-  primaryText: 'text-orange-600',
-  primaryCard: 'bg-orange-600',
-  cardColor: 'bg-white',
-}
+const initialState = themeLight
 
 const themeSlice = createSlice({
   name: 'theme',
