@@ -32,6 +32,13 @@ const Menu = () => {
   const nextFruits = useSelector(
     (state) => state.products.value.nextStateFruits
   )
+  const firstVisibleFruits = useSelector(
+    (state) => state.products.value.firstVisibleFruits
+  )
+  const lastVisibleFruits = useSelector(
+    (state) => state.products.value.lastVisibleFruits
+  )
+
   useEffect(() => {
     dispatch(getCategories())
     dispatch(
@@ -45,8 +52,20 @@ const Menu = () => {
 
   //Handler:
   const handleNextPrev = (next, fruits) => {
-    const product = next ? lastVisibleProduct : firstVisibleProduct
-    dispatch(getPrevNext({ idCategory: category.id, fruits, next, product }))
+    let product = ''
+    if (fruits) {
+      product = next ? lastVisibleFruits : firstVisibleFruits
+    } else {
+      product = next ? lastVisibleProduct : firstVisibleProduct
+    }
+    dispatch(
+      getPrevNext({
+        idCategory: fruits ? idFruitsCategories : category.id,
+        fruits,
+        next,
+        product,
+      })
+    )
   }
 
   return (
@@ -63,7 +82,7 @@ const Menu = () => {
               onClick={() => handleNextPrev(false, true)}
               className={`${theme.primaryCard} rounded-md p-2 `}
             >
-              <BsFillArrowRightCircleFill size="20px" color="white" />
+              <BsFillArrowLeftCircleFill size="20px" color="white" />
             </motion.button>
           )}
           {nextFruits && (
@@ -72,21 +91,19 @@ const Menu = () => {
               onClick={() => handleNextPrev(true, true)}
               className={`${theme.primaryCard} rounded-md p-2 `}
             >
-              <BsFillArrowLeftCircleFill size="20px" color="white" />
+              <BsFillArrowRightCircleFill size="20px" color="white" />
             </motion.button>
           )}
         </div>
         <div className="my-[3rem] flex w-full flex-wrap justify-center gap-3 md:my-[7rem] md:flex-nowrap md:justify-start md:gap-[2.5rem]">
           {fruits.map((data, i) => (
-            <div
-              key={data.id}
-              className={`md:mb-[3rem] ${i == 5 && '!hidden'}`}
-            >
+            <div key={data.id} className={`md:mb-[3rem] ${i > 4 && '!hidden'}`}>
               <CardFood data={data} />
             </div>
           ))}
         </div>
       </div>
+
       <div className="flex min-h-[100vh] w-full flex-col">
         <MenuTitle theme={theme} title={'Our Hot Dishes'} />
         <div className="my-8 flex w-full  flex-wrap justify-center gap-2 md:my-10 md:gap-4 ">
@@ -113,7 +130,7 @@ const Menu = () => {
             {products.map((data, i) => (
               <div
                 key={data.id}
-                className={`md:mb-[3rem] ${i == 5 && '!hidden'} `}
+                className={`md:mb-[3rem] ${i > 4 && '!hidden'} `}
               >
                 <CardFood data={data} />
               </div>

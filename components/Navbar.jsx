@@ -7,20 +7,18 @@ import { showCarts } from '../redux/features/cartsSlice'
 import { useSession } from 'next-auth/react'
 import { showHideModalAuth } from '../redux/features/authSlice'
 import DropdownMenu from '../components/DropdownMenu'
+import { menuNameNavbar } from '../helper/constanta'
+import { collection, doc, onSnapshot, query } from 'firebase/firestore'
+import { db } from '../firebase.config'
+
 const Navbar = ({ home }) => {
-  
+  const disptach = useDispatch()
+  const { data: session } = useSession()
+  const menuName = menuNameNavbar
+  const theme = useSelector((state) => state.theme.value)
+  const [totalQty, setTotalQty] = useState(0)
   const [shadow, setShadow] = useState('')
   const [showMenu, setShowMenu] = useState(false)
-  const { data: session } = useSession()
-  const menuName = [
-    { name: 'Home', url: '/#home' },
-    { name: 'Menu', url: '/#menu' },
-    { name: 'About Us', url: '/#about-us' },
-    { name: 'Service', url: '/#service' },
-  ]
-  const theme = useSelector((state) => state.theme.value)
-  const cartsTotal = useSelector((state) => state.carts.value.totalQty)
-  const disptach = useDispatch()
 
   useEffect(() => {
     const handleOnScroll = () => {
@@ -33,6 +31,23 @@ const Navbar = ({ home }) => {
     window.addEventListener('scroll', handleOnScroll)
     return () => window.removeEventListener('scroll', handleOnScroll)
   }, [])
+
+  useEffect(() => {
+    let unsub
+    if (session?.user.email) {
+      unsub = onSnapshot(
+        query(collection(db, 'users', session?.user.email, 'carts')),
+        (docs) => {
+          let totalQty = 0
+          docs.forEach((doc) => {
+            totalQty += doc.data().qty
+          })
+          setTotalQty(totalQty)
+        }
+      )
+    }
+    return () => unsub
+  }, [db,session])
 
   return (
     <header
@@ -86,7 +101,7 @@ const Navbar = ({ home }) => {
               >
                 <MdShoppingBasket className=" text-[1.5rem]" />
                 <div className="absolute -top-2 -right-2 flex h-5 w-5 rounded-full bg-red-custome  text-white">
-                  <p className="m-auto text-xs text-white">{cartsTotal}</p>
+                  <p className="m-auto text-xs text-white">{totalQty}</p>
                 </div>
               </motion.div>
               <div className="relative">

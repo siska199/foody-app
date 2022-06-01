@@ -22,6 +22,8 @@ const initialState = {
     loading: false,
     firstVisibleProduct: null,
     lastVisibleProduct: null,
+    firstVisibleFriuts: null,
+    lastVisibleFriuts: null,
     prevState: false,
     nextState: true,
     prevStateFruits: false,
@@ -55,7 +57,7 @@ const getSpecifiedProducts = createAsyncThunk(
     const resProducts = await getDocs(
       query(
         collection(db, 'categories', idCategory, 'products'),
-        orderBy('createdAt', 'desc'),
+        orderBy('createdAt'),
         limit(6)
       )
     )
@@ -93,21 +95,21 @@ const getPrevNext = createAsyncThunk(
   async ({ idCategory, fruits, next, product }) => {
     const nextQuery = query(
       collection(db, 'categories', idCategory, 'products'),
-      orderBy('createdAt', 'desc'),
+      orderBy('createdAt'),
       startAt(product),
       limit(6)
     )
 
     const prevQuery = query(
       collection(db, 'categories', idCategory, 'products'),
-      orderBy('createdAt', 'desc'),
+      orderBy('createdAt'),
       endAt(product),
       limitToLast(7)
     )
-    const resProducts = await getDocs(next?nextQuery:prevQuery)
+    const resProducts = await getDocs(next ? nextQuery : prevQuery)
 
     const lastVisible = resProducts.docs[resProducts.docs.length - 1]
-    const firstVisible = next?resProducts.docs[0]:resProducts.docs[1]
+    const firstVisible = next ? resProducts.docs[0] : resProducts.docs[1]
     const products = []
 
     resProducts.forEach((doc) => {
@@ -193,13 +195,18 @@ const productsSlice = createSlice({
       console.log('get products pending')
     },
     [getSpecifiedProducts.fulfilled]: (state, { payload }) => {
-      state.value.products = payload.data
-      state.value.firstVisibleProduct = payload.firstVisible
-      state.value.lastVisibleProduct = payload.lastVisible
-      state.value.nextState = payload.nextState
-      state.value.prevState = payload.prevState
       if (payload.fruits) {
         state.value.fruits = payload.data
+        state.value.firstVisibleFruits = payload.firstVisible
+        state.value.lastVisibleFruits = payload.lastVisible
+        state.value.nextStateFruits = payload.nextState
+        state.value.prevStateFruits = payload.prevState
+      } else {
+        state.value.products = payload.data
+        state.value.firstVisibleProduct = payload.firstVisible
+        state.value.lastVisibleProduct = payload.lastVisible
+        state.value.nextState = payload.nextState
+        state.value.prevState = payload.prevState
       }
     },
     [getSpecifiedProducts.rejected]: (state, { payload }) => {
@@ -212,13 +219,18 @@ const productsSlice = createSlice({
     [getPrevNext.fulfilled]: (state, { payload }) => {
       console.log('payload prevnext', payload)
       state.value.loading = false
-      state.value.products = payload.data
-      state.value.firstVisibleProduct = payload.firstVisible
-      state.value.lastVisibleProduct = payload.lastVisible
-      state.value.nextState = payload.nextState
-      state.value.prevState = payload.prevState
       if (payload.fruits) {
         state.value.fruits = payload.data
+        state.value.nextStateFruits = payload.nextState
+        state.value.prevStateFruits = payload.prevState
+        state.value.firstVisibleFruits = payload.firstVisible
+        state.value.lastVisibleFruits = payload.lastVisible
+      } else {
+        state.value.products = payload.data
+        state.value.firstVisibleProduct = payload.firstVisible
+        state.value.lastVisibleProduct = payload.lastVisible
+        state.value.nextState = payload.nextState
+        state.value.prevState = payload.prevState
       }
     },
   },

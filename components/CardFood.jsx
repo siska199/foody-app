@@ -3,13 +3,16 @@ import { MdShoppingBasket } from 'react-icons/md'
 import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCarts } from '../redux/features/cartsSlice'
+import { useSession } from 'next-auth/react'
 
 const CardFood = ({ data }) => {
   const theme = useSelector((state) => state.theme.value)
+  const { data: session } = useSession()
+
   const disptach = useDispatch()
 
   const handleAddToCart = () => {
-    disptach(addToCarts(data))
+    disptach(addToCarts({ data, idUser: session?.user.email }))
   }
 
   return (
@@ -23,7 +26,7 @@ const CardFood = ({ data }) => {
         <motion.img
           src={data.photo}
           whileHover={{ scale: 1.2 }}
-          className="absolute left-0 -mt-[2.7rem] w-[5rem]  object-contain md:-mt-[4rem] md:w-[8rem]"
+          className="absolute left-0 -mt-[2.8rem] w-[5rem]  object-contain md:-mt-[4rem] md:w-[8rem]"
           alt=""
         />
         <motion.div

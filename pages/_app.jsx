@@ -25,10 +25,20 @@ export default function MyApp({
       <SessionProvider session={session}>
         {Component.auth ? (
           <Auth role={Component.auth.role}>
-            {loading ? <LoadingPage /> : <Component {...pageProps} />}
+            {loading && session ? (
+              <LoadingPage />
+            ) : (
+              <Component {...pageProps} />
+            )}
           </Auth>
         ) : (
-          <>{loading ? <LoadingPage /> : <Component {...pageProps} />}</>
+          <>
+            {loading && session ? (
+              <LoadingPage />
+            ) : (
+              <Component {...pageProps} />
+            )}
+          </>
         )}
       </SessionProvider>
     </Provider>
@@ -46,8 +56,8 @@ function Auth({ children, role }) {
 
   if (isUser && role == typeUser) {
     return children
-  }else{
-    <PageNotFound/>
+  } else {
+    ;<PageNotFound />
   }
-  return  <LoadingPage />
+  return <LoadingPage />
 }

@@ -15,5 +15,14 @@ export const themeLight ={
     primaryCard: 'bg-orange-600',
     cardColor: 'bg-white',
 }
+
+//Navbar 
+export const menuNameNavbar =  [
+    { name: 'Home', url: '/#home' },
+    { name: 'Menu', url: '/#menu' },
+    { name: 'About Us', url: '/#about-us' },
+    { name: 'Service', url: '/#service' },
+  ]
+
 //Product
 export const idFruitsCategories = "F1opcave7d7KRIbgCIG0"

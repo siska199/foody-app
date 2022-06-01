@@ -34,10 +34,10 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="bg-transparen container grid grid-cols-1 pt-[7rem] md:grid-cols-2"
+      className="bg-transparen container pt-[7rem] grid sm:grid-cols-2"
     >
       {/* Left */}
-      <div className={`flex flex-col gap-5 md:w-[90%] ${theme.textMainColor} `}>
+      <div className={`flex flex-col gap-0 lg:w-[80%] ${theme.textMainColor} `}>
         <div
           className={`flex w-[10rem] items-center justify-center gap-2 rounded-full ${
             theme.theme == 'light' ? 'bg-orange-100' : 'bg-orange-200 p-1'
@@ -77,9 +77,9 @@ const Home = () => {
       </div>
 
       {/* Right */}
-      <div className="relative mt-10 flex md:mt-0 md:h-[35rem] md:justify-end ">
-        <div className="absolute top-0 flex h-full w-full flex-wrap items-center gap-4 md:justify-end ">
-          <div className="flex flex-wrap justify-center gap-2 py-2 px-2 md:w-[80%] md:gap-4 md:px-0 md:py-5">
+      <div className="relative mt-10 flex md:mt-0 md:justify-end  ">
+        <div className="absolute top-0 flex h-full w-full md:w-[100%] lg:w-[100%] flex-wrap items-center gap-4 md:justify-end ">
+          <div className="flex flex-wrap justify-center gap-2 py-2 px-2 lg-md:w-[90%] sm:w-[100%] md:w-[100%] lg:w-[80%] md:gap-4 md:px-0 md:py-5">
             {heroData.map((data, i) => (
               <CardHero key={i} data={data} />
             ))}
@@ -88,7 +88,7 @@ const Home = () => {
         {/* BG hero */}
         <img
           src="/assets/heroBg.webp"
-          className="w-[100%] md:w-[80%] lg:w-[60%]"
+          className="w-[100%] h-[20rem] sm:h-auto md:w-[80%] lg:w-[60%]"
         />
       </div>
     </section>

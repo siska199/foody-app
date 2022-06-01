@@ -1,18 +1,43 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useSession } from 'next-auth/react'
 import CardCart from './CardCart'
-import { showCarts } from '../redux/features/cartsSlice'
-const CartsInfo = ({ carts, shipping }) => {
-  //**Constanta**\\
+import { showCarts, getCartsState } from '../redux/features/cartsSlice'
+import { collection, onSnapshot, query } from 'firebase/firestore'
+import { db } from '../firebase.config'
+
+const CartsInfo = ({ shipping }) => {
   const router = useRouter()
   const dispatch = useDispatch()
-
+  const { data: session } = useSession()
+  const [carts, setCarts] = useState([])
+  const deliveryCost = useSelector(state=>state.carts.value.deliveryCost)
+  const totalPrice = 10000
+  
+  //**Constanta**\\
+  useEffect(() => {
+    let unsub
+    if (session?.user.email) {
+      unsub = onSnapshot(
+        query(collection(db, 'users', session?.user.email, 'carts')),
+        (docs) => {
+          const data = []
+          docs.forEach((doc) => data.push(doc.data()))
+          setCarts(data)
+          dispatch(getCartsState(data.length > 0 ? true : false))
+        }
+      )
+    }
+    return () => unsub
+  }, [session, db])
   //**Handler**\\
   const handlerMovePage = () => {
     shipping ? router.push('/') : router.push('/payment')
     dispatch(showCarts(false))
   }
+
   return (
     <div
       className={`flex w-full flex-col ${
@@ -20,7 +45,7 @@ const CartsInfo = ({ carts, shipping }) => {
       } justify-between border-2 ${shipping && 'bg-white'}`}
     >
       <div className="flex h-[45%] flex-col gap-3 overflow-y-scroll scrollbar-thin">
-        {carts.dataCarts.map((data, i) => (
+        {carts.map((data, i) => (
           <CardCart shipping={shipping} data={data} key={i} />
         ))}
       </div>
@@ -29,21 +54,21 @@ const CartsInfo = ({ carts, shipping }) => {
         <div className=" mb-[1rem] flex justify-between ">
           <p>Sub Total</p>
           <p>
-            $ {` `} {carts.totalPrice}
+            $ {` `} {totalPrice}
           </p>
         </div>
         <div className=" mb-[1rem] flex justify-between border-b-2 pb-[2rem] ">
           <p>Delivery Costs</p>
           <p>
             {' '}
-            ${` `} {carts.deliveryCost}
+            ${` `} {deliveryCost}
           </p>
         </div>
         <div className=" mb-[1rem] flex justify-between text-[1.2rem] ">
           <p>Total</p>
           <p>
             ${` `}
-            {carts.totalPrice + carts.deliveryCost}
+            {totalPrice + deliveryCost}
           </p>
         </div>
         {!shipping && (
