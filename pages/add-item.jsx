@@ -212,9 +212,7 @@ const Additem = () => {
   )
 }
 Additem.auth = {
-  role: 'user',
-  loading: <LoadingPage />,
-  unauthorized: '/',
+  role: 'admin',
 }
 
 export default Additem

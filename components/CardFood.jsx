@@ -2,9 +2,9 @@ import React from 'react'
 import { MdShoppingBasket } from 'react-icons/md'
 import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCarts } from '../redux/features/cartsSlice'
+import { addToCarts} from '../redux/features/cartsSlice'
+import { showHideModalAuth } from '../redux/features/authSlice'
 import { useSession } from 'next-auth/react'
-
 const CardFood = ({ data }) => {
   const theme = useSelector((state) => state.theme.value)
   const { data: session } = useSession()
@@ -12,7 +12,12 @@ const CardFood = ({ data }) => {
   const disptach = useDispatch()
 
   const handleAddToCart = () => {
-    disptach(addToCarts({ data, idUser: session?.user.email }))
+    console.log('session: ', session)
+    if (session) {
+      disptach(addToCarts({ data, idUser: session?.user.email }))
+    } else {
+      disptach(showHideModalAuth(true))
+    }
   }
 
   return (
