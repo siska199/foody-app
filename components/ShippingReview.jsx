@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import CartsInfo from './CartsInfo'
-
+import { useRouter } from 'next/router'
 
 const ShippingReview = ({ setStepShipping }) => {
 
