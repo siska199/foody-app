@@ -208,6 +208,8 @@ const productsSlice = createSlice({
         state.value.nextState = payload.nextState
         state.value.prevState = payload.prevState
       }
+      state.value.loading = false
+
     },
     [getSpecifiedProducts.rejected]: (state, { payload }) => {
       state.value.loading = false

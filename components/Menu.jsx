@@ -1,4 +1,7 @@
+import 'react-loading-skeleton/dist/skeleton.css'
+
 import React, { useEffect, useState } from 'react'
+import Skeleton from 'react-loading-skeleton'
 import CardFood from './CardFood'
 import CardCategory from './CardCategory'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,11 +12,14 @@ import {
   getCategories,
   getPrevNext,
 } from '../redux/features/productsSlice'
+
 import { motion } from 'framer-motion'
 import { idFruitsCategories } from '../helper/constanta'
 const Menu = () => {
   const dispatch = useDispatch()
   const [category, setCategory] = useState({ id: idFruitsCategories })
+  const loading = useSelector((state) => state.products.value.loading)
+  console.log('loading: ', loading)
   const theme = useSelector((state) => state.theme.value)
   const categories = useSelector((state) => state.products.value.categories)
   const products = useSelector((state) => state.products.value.products)
@@ -126,6 +132,7 @@ const Menu = () => {
               Prev
             </motion.button>
           )}
+
           <div className=" m-auto flex w-[80%] flex-wrap justify-center gap-4 justify-self-center">
             {products.map((data, i) => (
               <div
@@ -136,6 +143,7 @@ const Menu = () => {
               </div>
             ))}
           </div>
+
           {nextState && (
             <motion.button
               whileTap={{ scale: 0.75 }}

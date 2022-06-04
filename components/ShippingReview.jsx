@@ -1,10 +1,23 @@
 import { motion } from 'framer-motion'
 import CartsInfo from './CartsInfo'
 import { useRouter } from 'next/router'
-
+import { useSession } from 'next-auth/react'
+import { collection, deleteDoc, getDocs } from 'firebase/firestore'
+import { db } from '../firebase.config'
 const ShippingReview = ({ setStepShipping }) => {
-
+  const { data: session } = useSession()
   const router = useRouter()
+  const handlePay = async () => {
+    if (session) {
+      const data = await getDocs(
+        collection(db, 'users', session.user.email, 'carts')
+      )
+      data.forEach(async (doc) => {
+        await deleteDoc(doc.ref)
+      })
+    }
+    router.push('/')
+  }
 
   return (
     <div className="m-auto w-[100%] md:w-[80%]">
@@ -27,7 +40,7 @@ const ShippingReview = ({ setStepShipping }) => {
             </p>
           </div>
         </div>
-        <CartsInfo  shipping={true} />
+        <CartsInfo shipping={true} />
       </div>
       <div className="mt-4 flex w-full justify-between">
         <motion.button
@@ -40,7 +53,7 @@ const ShippingReview = ({ setStepShipping }) => {
         <motion.button
           whileTap={{ scale: 0.75 }}
           className="w-[5rem] rounded-lg border-2 bg-orange-500 py-2 text-[1rem] font-medium text-gray-300"
-          onClick={() => router.push('/')}
+          onClick={() => handlePay()}
         >
           Pay
         </motion.button>

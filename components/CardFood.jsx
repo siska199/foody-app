@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { MdShoppingBasket } from 'react-icons/md'
 import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCarts} from '../redux/features/cartsSlice'
+import { addToCarts } from '../redux/features/cartsSlice'
 import { showHideModalAuth } from '../redux/features/authSlice'
 import { useSession } from 'next-auth/react'
+import LoadingIcon from './LoadingIcon'
 const CardFood = ({ data }) => {
   const theme = useSelector((state) => state.theme.value)
+  const [load, setLoad] = useState(false)
   const { data: session } = useSession()
 
   const disptach = useDispatch()
@@ -19,21 +21,36 @@ const CardFood = ({ data }) => {
       disptach(showHideModalAuth(true))
     }
   }
-
+  const handleOnLoadImage = (e) => {
+    if (e.target.complete) {
+      setLoad(true)
+    }
+  }
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5 }}
-      className={`flex flex-col items-center justify-between gap-2 md:w-[16rem] ${theme.cardColor} p-3 backdrop-blur-sm hover:${theme.cardColor} mb-5 hover:shadow-lg md:mb-0`}
+      className={`flex w-[14rem] flex-col items-center justify-between gap-2 md:w-[16rem] ${theme.cardColor} p-3 backdrop-blur-sm hover:${theme.cardColor} mb-5 hover:shadow-lg md:mb-0`}
     >
       <div className="relative flex w-full justify-end ">
-        <motion.img
-          src={data.photo}
-          whileHover={{ scale: 1.2 }}
-          className="absolute left-0 -mt-[2.8rem] w-[5rem]  object-contain md:-mt-[4rem] md:w-[8rem]"
-          alt=""
-        />
+        <div
+          className={`${
+            load ? 'flex' : 'hidden'
+          } absolute left-0 -mt-[2.8rem] flex justify-center w-[7rem] h-[7rem]  rounded-full md:-mt-[4rem] md:w-[8rem] md:h-[8rem] `}
+        >
+          <motion.img
+            src={data.photo}
+            whileHover={{ scale: 1.2 }}
+            className="object-contain"
+            alt=""
+            onLoad={(e) => handleOnLoadImage(e)}
+          />
+        </div>
+        <div className={`${load ? 'hidden' : 'flex'}  absolute left-0 `}>
+          <LoadingIcon size="w-[2rem]" />
+        </div>
+
         <motion.div
           onClick={() => handleAddToCart()}
           whileTap={{ scale: 0.75 }}

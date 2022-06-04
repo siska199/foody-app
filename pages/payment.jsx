@@ -46,9 +46,8 @@ const payment = () => {
         <div className={`n m-auto my-[2rem] flex flex-col gap-[3rem] p-8 `}>
           <ul className="flex items-center justify-center gap-4 lg:gap-16">
             {steps.map((data, i) => (
-              <div>
+              <div key={i}>
                 <li
-                  key={i}
                   className={`before:content relative flex h-[4rem] w-[4rem] flex-col items-center justify-center rounded-full border-2 p-3 ${
                     stepShipping == data.title.toLocaleLowerCase()
                       ? 'border-[0.3rem] bg-sky-300 text-white'
@@ -57,7 +56,7 @@ const payment = () => {
                 >
                   {data.icon}
                 </li>
-                <p className='text-center'>{`Step ${i+1}`}</p>
+                <p className="text-center">{`Step ${i + 1}`}</p>
               </div>
             ))}
           </ul>

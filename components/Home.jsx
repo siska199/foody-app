@@ -34,7 +34,7 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="bg-transparen container pt-[7rem] grid sm:grid-cols-2"
+      className="bg-transparen container pt-[7rem] grid sm:grid-cols-2 mb-[7rem]"
     >
       {/* Left */}
       <div className={`flex flex-col gap-0 lg:w-[80%] ${theme.textMainColor} `}>
@@ -88,7 +88,7 @@ const Home = () => {
         {/* BG hero */}
         <img
           src="/assets/heroBg.webp"
-          className="w-[100%] h-[20rem] sm:h-auto md:w-[80%] lg:w-[60%]"
+          className="w-[100%] h-[35rem] md:h-[25rem] md:w-[80%] lg:w-[60%]"
         />
       </div>
     </section>
