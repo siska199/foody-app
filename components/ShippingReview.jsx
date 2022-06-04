@@ -2,19 +2,16 @@ import { motion } from 'framer-motion'
 import CartsInfo from './CartsInfo'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
-import { collection, deleteDoc, getDocs } from 'firebase/firestore'
-import { db } from '../firebase.config'
+import { useDispatch } from 'react-redux'
+import { deleteAllCarts } from '../redux/features/cartsSlice'
 const ShippingReview = ({ setStepShipping }) => {
   const { data: session } = useSession()
+  const dispatch = useDispatch()
   const router = useRouter()
+  
   const handlePay = async () => {
     if (session) {
-      const data = await getDocs(
-        collection(db, 'users', session.user.email, 'carts')
-      )
-      data.forEach(async (doc) => {
-        await deleteDoc(doc.ref)
-      })
+      dispatch( deleteAllCarts(session.user.email))
     }
     router.push('/')
   }

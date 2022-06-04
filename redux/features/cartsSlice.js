@@ -1,5 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { doc, setDoc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  getDocs,
+  collection
+} from 'firebase/firestore'
 import { db } from '../../firebase.config'
 
 const initialState = {
@@ -58,6 +66,18 @@ const removeFromCarts = createAsyncThunk(
     }
   }
 )
+const deleteAllCarts = createAsyncThunk(
+  'carts/deleteAllCarts',
+  async (idUser) => {
+    console.log('idUser: ', idUser)
+    const data = await getDocs(collection(db, 'users', idUser, 'carts'))
+    console.log('data: ', data)
+    data.forEach(async (doc) => {
+      console.log('doc: ', doc)
+      await deleteDoc(doc.ref)
+    })
+  }
+)
 
 const cartsSlice = createSlice({
   name: 'carts',
@@ -67,7 +87,6 @@ const cartsSlice = createSlice({
       state.value.showCarts = payload
     },
     getCartsState: (state, { payload }) => {
-      console.log("getCarts: ", payload)
       state.value.cartExists = payload
     },
   },
@@ -90,9 +109,18 @@ const cartsSlice = createSlice({
     [removeFromCarts.rejected]: (state, { payload }) => {
       console.log('remove from carts rejected', payload)
     },
+    [deleteAllCarts.pending]: (state) => {
+      console.log('delete all carts pending')
+    },
+    [deleteAllCarts.fulfilled]: (state, { payload }) => {
+      console.log('delete all carts fulfilled', payload)
+    },
+    [deleteAllCarts.rejected]: (state, { payload }) => {
+      console.log('delete all carts rejected', payload)
+    },
   },
 })
 
 export const { showCarts, getCartsState } = cartsSlice.actions
 export default cartsSlice.reducer
-export { addToCarts, removeFromCarts }
+export { addToCarts, removeFromCarts, deleteAllCarts }
