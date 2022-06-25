@@ -22,7 +22,6 @@ const initialState = {
 }
 
 const addToCarts = createAsyncThunk('carts/addToCarts', async (data) => {
-  console.log('data: ', data)
   const cartRef = doc(db, 'users', data.idUser, 'carts', data.data.title)
   const dataExist = await getDoc(cartRef)
   if (dataExist.exists()) {
@@ -69,11 +68,8 @@ const removeFromCarts = createAsyncThunk(
 const deleteAllCarts = createAsyncThunk(
   'carts/deleteAllCarts',
   async (idUser) => {
-    console.log('idUser: ', idUser)
     const data = await getDocs(collection(db, 'users', idUser, 'carts'))
-    console.log('data: ', data)
     data.forEach(async (doc) => {
-      console.log('doc: ', doc)
       await deleteDoc(doc.ref)
     })
   }
@@ -92,31 +88,22 @@ const cartsSlice = createSlice({
   },
   extraReducers: {
     [addToCarts.pending]: (state) => {
-      console.log('add to charts pending')
     },
     [addToCarts.fulfilled]: (state, { payload }) => {
-      console.log('add to carts fulfilled', payload)
     },
     [addToCarts.rejected]: (state, { payload }) => {
-      console.log('add to carts rejected', payload)
     },
     [removeFromCarts.pending]: (state) => {
-      console.log('remove from carts pending')
     },
     [removeFromCarts.fulfilled]: (state, { payload }) => {
-      console.log('remove from carts fulfilled', payload)
     },
     [removeFromCarts.rejected]: (state, { payload }) => {
-      console.log('remove from carts rejected', payload)
     },
     [deleteAllCarts.pending]: (state) => {
-      console.log('delete all carts pending')
     },
     [deleteAllCarts.fulfilled]: (state, { payload }) => {
-      console.log('delete all carts fulfilled', payload)
     },
     [deleteAllCarts.rejected]: (state, { payload }) => {
-      console.log('delete all carts rejected', payload)
     },
   },
 })

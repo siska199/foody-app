@@ -14,7 +14,6 @@ const CardFood = ({ data }) => {
   const disptach = useDispatch()
 
   const handleAddToCart = () => {
-    console.log('session: ', session)
     if (session) {
       disptach(addToCarts({ data, idUser: session?.user.email }))
     } else {

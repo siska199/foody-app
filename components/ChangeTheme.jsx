@@ -29,7 +29,6 @@ const ChangeTheme = () => {
 
   const handleChangeTheme = () => {
     const newTheme = themeInfo.theme == 'light' ? theme[0] : theme[1]
-    console.log('theme: ', newTheme)
     dispatch(changeTheme(newTheme))
   }
   return (

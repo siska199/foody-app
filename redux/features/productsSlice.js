@@ -159,40 +159,40 @@ const productsSlice = createSlice({
   extraReducers: {
     //Categories
     [getCategories.pending]: (state) => {
-      console.log('get categories pending')
+
     },
     [getCategories.fulfilled]: (state, { payload }) => {
       state.value.categories = payload
-      console.log('get categories fullfilled')
+
     },
     [getCategories.rejected]: (state) => {
-      console.log('get categories rejected')
+
     },
     [addCategory.pending]: (state) => {
-      console.log('add category pending')
+
     },
     [addCategory.fulfilled]: (state, { payload }) => {
-      console.log('add category fullfilled')
+
     },
     [addCategory.rejected]: (state, { payload }) => {
-      console.log('add category rejected')
+
     },
     // Products:
     [addProduct.pending]: (state) => {
       state.value.loading = true
-      console.log('add product pending')
+
     },
     [addProduct.fulfilled]: (state, { payload }) => {
       state.value.loading = false
-      console.log('add product fullfilled')
+
     },
     [addProduct.rejected]: (state, { payload }) => {
       state.value.loading = false
-      console.log('add product rejected')
+
     },
     [getSpecifiedProducts.pending]: (state) => {
       state.value.loading = true
-      console.log('get products pending')
+
     },
     [getSpecifiedProducts.fulfilled]: (state, { payload }) => {
       if (payload.fruits) {
@@ -213,13 +213,13 @@ const productsSlice = createSlice({
     },
     [getSpecifiedProducts.rejected]: (state, { payload }) => {
       state.value.loading = false
-      console.log('get products rejected')
+
     },
     [getPrevNext.pending]: (state, { payload }) => {
       state.value.loading = true
     },
     [getPrevNext.fulfilled]: (state, { payload }) => {
-      console.log('payload prevnext', payload)
+
       state.value.loading = false
       if (payload.fruits) {
         state.value.fruits = payload.data

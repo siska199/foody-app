@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch} from 'react-redux'
 import { addToCarts } from '../redux/features/cartsSlice'
 import { removeFromCarts } from '../redux/features/cartsSlice'
 import { useSession } from 'next-auth/react'
