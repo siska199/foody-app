@@ -18,7 +18,6 @@ import { idFruitsCategories } from '../helper/constanta'
 const Menu = () => {
   const dispatch = useDispatch()
   const [category, setCategory] = useState({ id: idFruitsCategories })
-  const loading = useSelector((state) => state.products.value.loading)
   const theme = useSelector((state) => state.theme.value)
   const categories = useSelector((state) => state.products.value.categories)
   const products = useSelector((state) => state.products.value.products)
