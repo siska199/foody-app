@@ -13,15 +13,15 @@ const CartsInfo = ({ shipping }) => {
   const dispatch = useDispatch()
   const { data: session } = useSession()
   const [carts, setCarts] = useState([])
-  const deliveryCost = useSelector(state=>state.carts.value.deliveryCost)
+  const deliveryCost = useSelector((state) => state.carts.value.deliveryCost)
   const totalPrice = 10000
-  
+
   //**Constanta**\\
   useEffect(() => {
-    let unsub
-    if (session?.user.email) {
-      unsub = onSnapshot(
-        query(collection(db, 'users', session?.user.email, 'carts')),
+    const unsub =
+      session &&
+      onSnapshot(
+        query(collection(db, 'users', session.user.email, 'carts')),
         (docs) => {
           const data = []
           docs.forEach((doc) => data.push(doc.data()))
@@ -29,8 +29,11 @@ const CartsInfo = ({ shipping }) => {
           dispatch(getCartsState(data.length > 0 ? true : false))
         }
       )
+
+    return () => {
+      unsub
+      setCarts([])
     }
-    return () => unsub
   }, [session, db])
   //**Handler**\\
   const handlerMovePage = () => {

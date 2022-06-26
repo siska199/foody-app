@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { MdShoppingBasket } from 'react-icons/md'
 import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
@@ -29,14 +29,19 @@ const Navbar = ({ home }) => {
       }
     }
     window.addEventListener('scroll', handleOnScroll)
-    return () => window.removeEventListener('scroll', handleOnScroll)
+    return () => {
+      window.removeEventListener('scroll', handleOnScroll)
+      setTotalQty(0)
+      setShadow('')
+      setShowMenu('')
+    }
   }, [])
 
   useEffect(() => {
-    let unsub
-    if (session?.user.email) {
-      unsub = onSnapshot(
-        query(collection(db, 'users', session?.user.email, 'carts')),
+    const unsub =
+      session &&
+      onSnapshot(
+        query(collection(db, 'users', session.user.email, 'carts')),
         (docs) => {
           let totalQty = 0
           docs.forEach((doc) => {
@@ -45,9 +50,8 @@ const Navbar = ({ home }) => {
           setTotalQty(totalQty)
         }
       )
-    }
     return () => unsub
-  }, [db,session])
+  }, [db, session])
 
   return (
     <header

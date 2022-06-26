@@ -10,8 +10,7 @@ import { MdOutlineVerified } from 'react-icons/md'
 import { data } from 'autoprefixer'
 
 const payment = () => {
-  //**Constanta**\\
-  const theme = useSelector((state) => state.theme.value)
+  //**Constanta**\\  
   const steps = [
     {
       title: 'Address',
