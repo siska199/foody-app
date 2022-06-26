@@ -35,6 +35,7 @@ const CartsInfo = ({ shipping }) => {
       setCarts([])
     }
   }, [session, db])
+
   //**Handler**\\
   const handlerMovePage = () => {
     shipping ? router.push('/') : router.push('/payment')
