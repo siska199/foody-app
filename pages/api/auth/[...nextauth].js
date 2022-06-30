@@ -10,6 +10,10 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
+  secret : process.env.JWT_SECRET,
+  session:{
+    strategy:"jwt"
+  },
   pages: {
     signIn: '/',
     signOut: '/',
@@ -17,6 +21,7 @@ export default NextAuth({
   theme: {
     colorScheme: 'light',
   },
+  
   callbacks: {
     async signIn({ user }) {
       const docSnap = await getDoc(doc(db, 'users', user.email))
